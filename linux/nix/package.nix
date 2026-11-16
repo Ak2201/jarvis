@@ -194,8 +194,8 @@ stdenv.mkDerivation {
       leaving what you are doing. Also: Flow dictation with Parakeet offline, and a
       notetaker for your calls.
     '';
-    homepage = "https://github.com/YOUR-GITHUB/jarvis";
-    changelog = "https://github.com/YOUR-GITHUB/jarvis/blob/main/CHANGELOG.md";
+    homepage = "https://github.com/Ak2201/jarvis";
+    changelog = "https://github.com/Ak2201/jarvis/blob/main/CHANGELOG.md";
     # The code is MIT. The name, Juno, the icon and the sounds are © the Jarvis team
     # (LICENSE-ASSETS.md): building and running it for yourself is allowed,
     # redistributing binaries is not without written permission. Hence `unfree`,

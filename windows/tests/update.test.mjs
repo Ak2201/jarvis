@@ -52,7 +52,7 @@ const OUT = {
   ...NO_UPDATE,
   consent: true,
   current: "0.5.0",
-  latest: { version: "0.6.0", headline: "Flow dictation", pageUrl: "https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.6.0" },
+  latest: { version: "0.6.0", headline: "Flow dictation", pageUrl: "https://github.com/Ak2201/jarvis/releases/tag/windows-v0.6.0" },
   canInstall: true,
 };
 let shown;

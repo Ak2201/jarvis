@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Android için Jarvis</string>
     <string name="about_credit">Android için Jarvis, Rhytam Biswas tarafından geliştirildi. the Jarvis team\'nin Jarvis projesinin bir parçasıdır.</string>
-    <string name="about_repo">github.com/YOUR-GITHUB/jarvis</string>
+    <string name="about_repo">github.com/Ak2201/jarvis</string>
     <string name="licences_title">Lisanslar</string>
     <string name="licences_intro">Jarvis\'nun kodu MIT lisanslıdır. Adı, karakteri, simgesi ve sesleri the Jarvis team\'ye aittir ve bu lisansa dahil değildir. Kütüphaneler lisanslarıyla birlikte listelenmiştir.</string>
     <string name="about_assets">Jarvis adı, Juno karakteri, simgesi ve seslerinin telif hakkı © the Jarvis team\'ye aittir ve izinle kullanılmaktadır. Android kodunun telif hakkı © Rhytam Biswas\'a aittir ve MIT Lisansı ile yayımlanmıştır.</string>

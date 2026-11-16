@@ -8,7 +8,7 @@ pkgver=0.5.9
 pkgrel=1
 pkgdesc="Juno lives at the top of your screen and keeps an eye on your Claude Code sessions"
 arch=('x86_64' 'aarch64')
-url="https://github.com/YOUR-GITHUB/jarvis"
+url="https://github.com/Ak2201/jarvis"
 license=("MIT" "LicenseRef-jarvis-assets")
 depends=(
   'webkit2gtk-4.1'
@@ -33,7 +33,7 @@ provides=("$_pkgname")
 conflicts=("$_pkgname")
 # makepkg's default LTO and debug flags make the Rust build very slow.
 options=('!lto' '!debug')
-source=("$_pkgname::git+https://github.com/YOUR-GITHUB/jarvis.git")
+source=("$_pkgname::git+https://github.com/Ak2201/jarvis.git")
 sha256sums=('SKIP')
 
 pkgver() {

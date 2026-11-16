@@ -2,7 +2,7 @@
   "strings": {
     "app_name": "Jarvis para Android",
     "about_credit": "Jarvis para Android, de Rhytam Biswas. Parte do Jarvis de the Jarvis team.",
-    "about_repo": "github.com/YOUR-GITHUB/jarvis",
+    "about_repo": "github.com/Ak2201/jarvis",
     "licences_title": "Licenças",
     "licences_intro": "O código do Jarvis tem licença MIT. O nome, o personagem, o ícone e os sons são de the Jarvis team e não estão sob essa licença. As bibliotecas são listadas com a sua licença.",
     "about_assets": "O nome Jarvis, o personagem Juno, o ícone e os sons são © the Jarvis team e usados com permissão. O código Android é © Rhytam Biswas, publicado sob a licença MIT.",

@@ -8,7 +8,7 @@ Your Mac does the work, your iPhone keeps you in the loop when you step away: yo
 
 | | |
 |---|---|
-| **Mac** | Jarvis **0.1.9 or later** on macOS 15+: the [GitHub build](https://github.com/YOUR-GITHUB/jarvis/releases/latest), or the Mac App Store version once it is out |
+| **Mac** | Jarvis **0.1.9 or later** on macOS 15+: the [GitHub build](https://github.com/Ak2201/jarvis/releases/latest), or the Mac App Store version once it is out |
 | **iPhone** | iOS 18 or later. The Lock Screen and Dynamic Island need an iPhone with a Dynamic Island for the island part; every iPhone gets the Lock Screen |
 | **iCloud** | The **same Apple Account** signed in to iCloud on the Mac and the iPhone. That's the whole link: no account to create, no server, no pairing code |
 | **Jarvis on iPhone** | From the App Store (coming soon) or [Join the TestFlight beta](https://testflight.apple.com/join/3GpeHv2b) — free, up to 10,000 testers |
@@ -52,7 +52,7 @@ Nothing shows up? See [Troubleshooting](#troubleshooting).
 - The Live Activity goes through a small relay ([`relay/`](../relay/)) that holds Apple's push key. It only sees the agent's name and state, never a project name, a command or a path, and it stores and logs nothing.
 - No account, no analytics. Turning the iPhone switch off on the Mac deletes your sessions from iCloud.
 
-Details in the [privacy policy](https://YOUR-GITHUB.github.io/jarvis/privacy.html).
+Details in the [privacy policy](https://Ak2201.github.io/jarvis/privacy.html).
 
 ## Troubleshooting
 
@@ -78,7 +78,7 @@ Details in the [privacy policy](https://YOUR-GITHUB.github.io/jarvis/privacy.htm
 **I can't send instructions**
 - Instructions need the GitHub build of the Mac app, with **Let my iPhone send instructions to Claude Code** on.
 
-Still stuck? [Open an issue](https://github.com/YOUR-GITHUB/jarvis/issues) or see [Support](https://YOUR-GITHUB.github.io/jarvis/support.html).
+Still stuck? [Open an issue](https://github.com/Ak2201/jarvis/issues) or see [Support](https://Ak2201.github.io/jarvis/support.html).
 
 ## Build it yourself (developers)
 

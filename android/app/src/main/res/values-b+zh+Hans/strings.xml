@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Jarvis for Android</string>
     <string name="about_credit">Jarvis for Android，作者 Rhytam Biswas。属于 the Jarvis team 的 Jarvis。</string>
-    <string name="about_repo">github.com/YOUR-GITHUB/jarvis</string>
+    <string name="about_repo">github.com/Ak2201/jarvis</string>
     <string name="licences_title">许可证</string>
     <string name="licences_intro">Jarvis 的代码采用 MIT 许可证。名称、角色、图标和声音属于 the Jarvis team，不在该许可证之内。各个库及其许可证列在下方。</string>
     <string name="about_assets">Jarvis 这个名称、Juno 角色、图标和声音的版权归 © the Jarvis team 所有，并经其许可使用。Android 代码版权归 © Rhytam Biswas 所有，以 MIT 许可证发布。</string>

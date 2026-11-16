@@ -151,7 +151,7 @@ $CHANGES
 2. Move Jarvis.app to your Applications folder, replacing the old one if you have it.
 3. Launch it, and click Open when macOS asks you to confirm.
 
-Linux and Windows: see the [README](https://github.com/YOUR-GITHUB/jarvis#readme)."
+Linux and Windows: see the [README](https://github.com/Ak2201/jarvis#readme)."
 
 echo
 echo "──────── Release notes ────────"
@@ -168,12 +168,12 @@ git tag "$TAG" "$COMMIT"
 git push origin "$TAG"
 
 gh release create "$TAG" "$ZIP" \
-  --repo YOUR-GITHUB/jarvis \
+  --repo Ak2201/jarvis \
   --title "Jarvis $VERSION" \
   --latest \
   --notes "$NOTES"
 
-echo "✓ $TAG released: https://github.com/YOUR-GITHUB/jarvis/releases/tag/$TAG"
+echo "✓ $TAG released: https://github.com/Ak2201/jarvis/releases/tag/$TAG"
 
 # ── 7. Homebrew cask ──────────────────────────────────────────────────────────
 # Casks/jarvis.rb points at the zip just published: bump its version and hash.

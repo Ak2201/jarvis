@@ -114,7 +114,7 @@ const out = (version = "0.6.0") => ({
   ...NO_UPDATE,
   consent: true,
   current: "0.5.2",
-  latest: { version, headline: null, pageUrl: "https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.6.0" },
+  latest: { version, headline: null, pageUrl: "https://github.com/Ak2201/jarvis/releases/tag/windows-v0.6.0" },
 });
 
 test("Juno is blue while a version waits", () => {
@@ -154,8 +154,8 @@ test("the blue only when Juno has nothing else to say", () => {
 });
 
 test("All changes and the coffee", () => {
-  assert.equal(releasePage("windows", "0.5.2"), "https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.2");
-  assert.equal(releasePage("linux", "0.5.2"), "https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.2");
+  assert.equal(releasePage("windows", "0.5.2"), "https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.2");
+  assert.equal(releasePage("linux", "0.5.2"), "https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.2");
   const site = readFileSync(new URL("../../docs/index.html", import.meta.url), "utf8");
   assert.ok(site.includes(COFFEE_URL), "the same link as the Jarvis page");
 });

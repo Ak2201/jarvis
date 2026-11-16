@@ -2,7 +2,7 @@
   "strings": {
     "app_name": "Android 版 Jarvis",
     "about_credit": "Android 版 Jarvis 由 Rhytam Biswas 開發，是 the Jarvis team 的 Jarvis 專案的一部分。",
-    "about_repo": "github.com/YOUR-GITHUB/jarvis",
+    "about_repo": "github.com/Ak2201/jarvis",
     "licences_title": "授權條款",
     "licences_intro": "Jarvis 的程式碼採用 MIT 授權。名稱、角色、圖示和音效屬於 the Jarvis team，不適用此授權。以下列出各個程式庫及其授權條款。",
     "about_assets": "Jarvis 名稱、Juno 角色、圖示和音效的著作權為 © the Jarvis team，並經許可使用。Android 程式碼的著作權為 © Rhytam Biswas，以 MIT 授權條款發布。",

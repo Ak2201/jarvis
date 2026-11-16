@@ -2,7 +2,7 @@
 {
   description = "Jarvis: Juno lives at the top of your screen and keeps an eye on your AI coding agents";
 
-  # Try it:          nix run github:YOUR-GITHUB/jarvis
+  # Try it:          nix run github:Ak2201/jarvis
   # On NixOS, add the flake to your inputs, then:
   #   environment.systemPackages = [ inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   # Through the overlay instead, allow it in your own nixpkgs config, since the

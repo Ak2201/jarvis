@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Jarvis untuk Android</string>
     <string name="about_credit">Jarvis untuk Android, oleh Rhytam Biswas. Bagian dari Jarvis oleh the Jarvis team.</string>
-    <string name="about_repo">github.com/YOUR-GITHUB/jarvis</string>
+    <string name="about_repo">github.com/Ak2201/jarvis</string>
     <string name="licences_title">Lisensi</string>
     <string name="licences_intro">Kode Jarvis berlisensi MIT. Nama, karakter, ikon, dan suaranya milik the Jarvis team dan tidak termasuk dalam lisensi itu. Pustaka dicantumkan beserta lisensinya.</string>
     <string name="about_assets">Nama Jarvis, karakter Juno, ikon, dan suaranya © the Jarvis team dan digunakan dengan izin. Kode Android © Rhytam Biswas, dirilis di bawah Lisensi MIT.</string>

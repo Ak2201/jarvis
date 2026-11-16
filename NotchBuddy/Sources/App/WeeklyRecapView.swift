@@ -198,9 +198,9 @@ private struct RecapSharePanelView: View {
 struct RecapShareImageView: View {
     /// Where people can find Jarvis, printed under the shared image.
     #if APPSTORE
-    static let footer = "Jarvis · YOUR-GITHUB.github.io/jarvis"
+    static let footer = "Jarvis · Ak2201.github.io/jarvis"
     #else
-    static let footer = "Jarvis · github.com/YOUR-GITHUB/jarvis"
+    static let footer = "Jarvis · github.com/Ak2201/jarvis"
     #endif
 
     let summary: WeeklySummary

@@ -109,10 +109,10 @@ struct AboutView: View {
             }
 
             Section("Jarvis") {
-                Link("Website", destination: URL(string: "https://YOUR-GITHUB.github.io/jarvis/")!)
-                Link("Support", destination: URL(string: "https://YOUR-GITHUB.github.io/jarvis/support.html")!)
-                Link("Privacy Policy", destination: URL(string: "https://YOUR-GITHUB.github.io/jarvis/privacy.html")!)
-                Link("Terms", destination: URL(string: "https://YOUR-GITHUB.github.io/jarvis/terms.html")!)
+                Link("Website", destination: URL(string: "https://Ak2201.github.io/jarvis/")!)
+                Link("Support", destination: URL(string: "https://Ak2201.github.io/jarvis/support.html")!)
+                Link("Privacy Policy", destination: URL(string: "https://Ak2201.github.io/jarvis/privacy.html")!)
+                Link("Terms", destination: URL(string: "https://Ak2201.github.io/jarvis/terms.html")!)
             }
 
             Section {

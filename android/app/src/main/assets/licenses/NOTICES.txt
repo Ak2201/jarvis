@@ -1,6 +1,6 @@
 JARVIS FOR ANDROID: LICENCES AND NOTICES
 
-Jarvis for Android, by Rhytam Biswas, is part of Jarvis by the Jarvis team (https://github.com/YOUR-GITHUB/jarvis). It is free, has no ads and no analytics.
+Jarvis for Android, by Rhytam Biswas, is part of Jarvis by the Jarvis team (https://github.com/Ak2201/jarvis). It is free, has no ads and no analytics.
 
 1. The code of Jarvis
 
@@ -8,7 +8,7 @@ The source code of Jarvis is Copyright (c) 2026 the Jarvis team and is released 
 
 2. The name, the character, the icon and the sounds
 
-The names "Jarvis" and "Juno", the Juno character (its design, look, expressions and animations), the app icon and the sounds are Copyright (c) 2026 the Jarvis team. All rights reserved. They are NOT covered by the MIT License (see LICENSE-ASSETS.md in https://github.com/YOUR-GITHUB/jarvis). They are used in this app with the written permission of the Jarvis team, for this Android app only, and may not be reused elsewhere without his permission.
+The names "Jarvis" and "Juno", the Juno character (its design, look, expressions and animations), the app icon and the sounds are Copyright (c) 2026 the Jarvis team. All rights reserved. They are NOT covered by the MIT License (see LICENSE-ASSETS.md in https://github.com/Ak2201/jarvis). They are used in this app with the written permission of the Jarvis team, for this Android app only, and may not be reused elsewhere without his permission.
 
 3. ZXing
 

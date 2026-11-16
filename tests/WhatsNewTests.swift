@@ -69,7 +69,7 @@ enum WhatsNewTests {
 
         print("\nLinks")
         check("coffee goes to Stripe", WhatsNew.coffeeURL.host == "buy.stripe.com")
-        check("release page", WhatsNew.releasePage("0.6.0").absoluteString == "https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.6.0")
+        check("release page", WhatsNew.releasePage("0.6.0").absoluteString == "https://github.com/Ak2201/jarvis/releases/tag/v0.6.0")
 
         if failures > 0 {
             print("\n\(failures) failure(s)")

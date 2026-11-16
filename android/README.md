@@ -1,12 +1,12 @@
 # Jarvis for Android
 
-The Android app of [Jarvis](https://github.com/YOUR-GITHUB/jarvis) by the Jarvis team, by Rhytam Biswas. It shows your coding
+The Android app of [Jarvis](https://github.com/Ak2201/jarvis) by the Jarvis team, by Rhytam Biswas. It shows your coding
 agents as Juno on your phone and lets you approve or deny their permission requests, answer their questions and chat
 through your computer's AI providers.
 
 The name, the Juno character, the icon and the sounds are © the Jarvis team and used with permission (see
 [PERMISSION.md](PERMISSION.md)). The Android code is © Rhytam Biswas under the MIT License (see [LICENSE](LICENSE)). The app is free: no ads, no billing, no analytics.
-It speaks English, French, Spanish, Brazilian Portuguese, Simplified Chinese, Hindi, Bengali, Russian, Indonesian and Arabic (Settings > Language, or Android 13's own per-app language screen); the look is dark or light (Settings > Theme). Download the signed APK from the [Releases](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.3.0) (Android 11 or later; it needs Jarvis 0.4.0 or later on Windows or Linux).
+It speaks English, French, Spanish, Brazilian Portuguese, Simplified Chinese, Hindi, Bengali, Russian, Indonesian and Arabic (Settings > Language, or Android 13's own per-app language screen); the look is dark or light (Settings > Theme). Download the signed APK from the [Releases](https://github.com/Ak2201/jarvis/releases/tag/android-v0.3.0) (Android 11 or later; it needs Jarvis 0.4.0 or later on Windows or Linux).
 
 ## Screenshots
 

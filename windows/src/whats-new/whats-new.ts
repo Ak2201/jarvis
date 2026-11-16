@@ -186,7 +186,7 @@ export function showsUpdateHint(waiting: boolean, state: BotStateName, pending: 
 
 /** The release page of this version, for "All changes". */
 export function releasePage(platform: "windows" | "linux", version: string): string {
-  return `https://github.com/YOUR-GITHUB/jarvis/releases/tag/${platform}-v${encodeURIComponent(version)}`;
+  return `https://github.com/Ak2201/jarvis/releases/tag/${platform}-v${encodeURIComponent(version)}`;
 }
 
 /** Buy Juno a coffee: the same Stripe link as the Jarvis page (docs/index.html). */

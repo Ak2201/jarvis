@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Android용 Jarvis</string>
     <string name="about_credit">Rhytam Biswas가 개발한 Android용 Jarvis입니다. the Jarvis team의 Jarvis 프로젝트에 속합니다.</string>
-    <string name="about_repo">github.com/YOUR-GITHUB/jarvis</string>
+    <string name="about_repo">github.com/Ak2201/jarvis</string>
     <string name="licences_title">라이선스</string>
     <string name="licences_intro">Jarvis 코드는 MIT 라이선스로 제공됩니다. 이름, 캐릭터, 아이콘, 사운드는 the Jarvis team의 소유이며 MIT 라이선스에 포함되지 않습니다. 각 라이브러리와 해당 라이선스가 아래에 나열되어 있습니다.</string>
     <string name="about_assets">Jarvis 이름, Juno 캐릭터, 아이콘, 사운드의 저작권은 © the Jarvis team에 있으며 허가를 받아 사용합니다. Android 코드의 저작권은 © Rhytam Biswas에 있으며 MIT 라이선스로 공개됩니다.</string>

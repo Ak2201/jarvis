@@ -13,10 +13,10 @@ enum MacUpdateTests {
         var assets: [[String: Any]] = [["name": "notes.txt", "browser_download_url": "https://github.com/x/notes.txt", "size": 3]]
         if zip {
             assets.append(["name": "Jarvis.zip", "size": 34_000_000,
-                           "browser_download_url": "https://github.com/YOUR-GITHUB/jarvis/releases/download/\(tag)/Jarvis.zip"])
+                           "browser_download_url": "https://github.com/Ak2201/jarvis/releases/download/\(tag)/Jarvis.zip"])
         }
         return ["tag_name": tag, "draft": draft, "prerelease": pre, "assets": assets, "body": body,
-                "html_url": "https://github.com/YOUR-GITHUB/jarvis/releases/tag/\(tag)"]
+                "html_url": "https://github.com/Ak2201/jarvis/releases/tag/\(tag)"]
     }
 
     static func json(_ list: [[String: Any]]) -> Data { try! JSONSerialization.data(withJSONObject: list) }
@@ -49,7 +49,7 @@ enum MacUpdateTests {
             let r = MacUpdate.latest(json(list))
             check("picks v0.10.0 over 0.6.2 and 0.5.1", r?.version == "0.10.0" && r?.tag == "v0.10.0")
             check("its Jarvis.zip", r?.zipURL.lastPathComponent == "Jarvis.zip" && r?.size == 34_000_000)
-            check("its page", r?.pageURL.absoluteString == "https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.10.0")
+            check("its page", r?.pageURL.absoluteString == "https://github.com/Ak2201/jarvis/releases/tag/v0.10.0")
             check("headline from the bold part", r?.headline == "One-click update")
             check("nothing for drafts and others only", MacUpdate.latest(json([release("v0.9.0", draft: true), release("windows-v1.0")])) == nil)
             check("garbage", MacUpdate.latest(Data("{\"message\":\"rate limited\"}".utf8)) == nil)

@@ -27,7 +27,7 @@ class ScreenLayoutTest {
     @Test fun theNoticeNamesTheOriginalAuthorAndHisRepository() {
         val xml = File("src/main/res/values/strings.xml").readText()
         assertTrue(xml.contains("Jarvis for Android, by Rhytam Biswas. Part of Jarvis by the Jarvis team"))
-        assertTrue(xml.contains("github.com/YOUR-GITHUB/jarvis"))
+        assertTrue(xml.contains("github.com/Ak2201/jarvis"))
         assertTrue(xml.contains("© the Jarvis team"))
         assertTrue(xml.contains("MIT License"))
     }

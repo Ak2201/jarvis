@@ -10,7 +10,7 @@ Approve permissions, watch your agents work, drop a file, chat with Claude — a
 
 **New in 0.4: Jarvis is a real Mac app.** Hold a key anywhere, speak, let go: your words are pasted where you type, like Wispr Flow — free, open source, and offline with Parakeet. Record your calls without a bot in the meeting and get the transcript, the summary and the to-dos.
 
-[![Version](https://img.shields.io/github/v/release/YOUR-GITHUB/jarvis?filter=v*&label=version&color=0A84FF)](https://github.com/YOUR-GITHUB/jarvis/releases)
+[![Version](https://img.shields.io/github/v/release/Ak2201/jarvis?filter=v*&label=version&color=0A84FF)](https://github.com/Ak2201/jarvis/releases)
 ![macOS 15+](https://img.shields.io/badge/macOS-15%2B-black?logo=apple)
 ![iOS 18+](https://img.shields.io/badge/iOS-18%2B-black?logo=apple)
 ![Android 11+](https://img.shields.io/badge/Android-11%2B-3DDC84?logo=android&logoColor=white)
@@ -20,7 +20,7 @@ Approve permissions, watch your agents work, drop a file, chat with Claude — a
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-native-0A84FF)
 ![Tauri 2](https://img.shields.io/badge/Tauri-2-FFC131?logo=tauri&logoColor=black)
 ![Code: MIT](https://img.shields.io/badge/code-MIT-green)
-![GitHub stars](https://img.shields.io/github/stars/YOUR-GITHUB/jarvis?style=social)
+![GitHub stars](https://img.shields.io/github/stars/Ak2201/jarvis?style=social)
 
 
 </div>
@@ -110,7 +110,7 @@ The Mac app does the work; the iPhone app keeps you in the loop when you step aw
 - 🧩 **Home-screen widgets** — nine of them, from a tiny Juno to a big card with plan usage and quick buttons. Orange when something waits for you, blue while it works, green when it's done. Read-only: a request is always decided in the app.
 - 🔒 **Local and private** — the phone talks straight to your computer on your Wi-Fi, paired with a QR code and a pinned certificate. The phone link is **off by default**, and nothing listens until you turn it on.
 
-**Status:** tested on a real phone (Android 13) with the Windows app. The phone link is in **Jarvis 0.4.0 for Windows and Linux**. Download the signed APK from the [latest Android release](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.3.0). Android needs Jarvis on **Windows or Linux** (not the Mac), Android 11 or later, and both on the same Wi-Fi. Full guide: [`android/README.md`](android/README.md).
+**Status:** tested on a real phone (Android 13) with the Windows app. The phone link is in **Jarvis 0.4.0 for Windows and Linux**. Download the signed APK from the [latest Android release](https://github.com/Ak2201/jarvis/releases/tag/android-v0.3.0). Android needs Jarvis on **Windows or Linux** (not the Mac), Android 11 or later, and both on the same Wi-Fi. Full guide: [`android/README.md`](android/README.md).
 
 
 ## Versions
@@ -119,59 +119,59 @@ macOS releases are published as `v*` tags. See [CHANGELOG.md](CHANGELOG.md) for 
 
 | Version | Date | Highlights |
 |---------|------|------------|
-| [0.6.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.6.0) | Nov 12, 2026 | Start a Claude Code session from the notch, drop a file on a session, ⌘⇧2 screenshot copied, approve Antigravity commands, Android phone link, Jarvisdoro |
-| [0.5.8](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.8) | Oct 31, 2026 | Fixes by @Ohualtex: approvals and questions stay put, desktop Juno stays visible, dropped files no longer overwrite each other |
-| [0.5.7](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.7) | Oct 31, 2026 | Mail in the notch: search, filters, reading, automatic sorting with rules and Undo, mail plans from the chat; search the settings; Jarvis in a corner of the screen |
-| [0.5.6](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.6) | Oct 30, 2026 | Chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot), switched on in Settings → Chat; Korean and Japanese |
-| [0.5.5](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.5) | Oct 29, 2026 | Chat on your Claude plan with no API key; each session apart behind its pill, questions side by side; Claude Code on a remote machine |
-| [0.5.4](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.4) | Oct 29, 2026 | Reliability: 25 community fixes — the hook server never gives up, your own hooks stay untouched, no crash without a mic, truer n8n, Stripe and GitHub pills |
-| [0.5.3](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.3) | Oct 22, 2026 | Juno turns blue when a new version waits; What's new and your Jarvis so far after each update; Buy Juno a coffee |
-| [0.5.2](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.2) | Oct 20, 2026 | New version in the notch, one click to install it; German, Turkish, Thai, Traditional Chinese; Homebrew; plan approval from the notch |
-| [0.5.1](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.1) | Oct 18, 2026 | WhatsApp in one click: Jarvis installs and starts the gateway, no Terminal |
-| [0.5.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.5.0) | Oct 18, 2026 | WhatsApp in the notch (experimental), Juno feels your Mac, a screen capture for Claude, dictation that writes prompts or translates |
-| [0.4.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.4.0) | Oct 14, 2026 | Jarvis becomes an app: Flow dictation anywhere, Parakeet offline, the Notetaker, a window in the Dock |
-| [0.3.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.3.0) | Oct 11, 2026 | « OK Jarvis »: talk to Juno, powered by Claude — pills, music, your services, web search, emails |
-| [0.2.3](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.2.3) | Oct 8, 2026 | Terminal sessions, Spotify, a colour per Juno, dictation in any language, open on hover, your own sounds |
-| [0.2.2](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.2.2) | Oct 8, 2026 | Choose Juno's screen, Claude Desktop pill, Codex plan usage, full questions, safer settings.json |
-| [0.2.1](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.2.1) | Oct 7, 2026 | Hermes Agent support |
-| [0.2.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.2.0) | Oct 6, 2026 | Copilot CLI, Muse Code, OpenCode and Amp, weekly recap, 10 languages |
-| [0.1.9](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.9) | Oct 6, 2026 | iPhone services with live details and actions, smarter Live Activity |
-| [0.1.8](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.8) | Oct 5, 2026 | Jarvis on iPhone: sessions, widgets, approvals with Face ID, Juno in the Dynamic Island |
-| [0.1.7](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.7) | Oct 4, 2026 | Keyboard shortcuts |
-| [0.1.6](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.6) | Oct 4, 2026 | Juno on the desktop |
-| [0.1.5](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.5) | Oct 4, 2026 | Wardrobe and seasonal outfits, new launch greeting |
-| [0.1.4](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.4) | Oct 3, 2026 | Live diffs, GitHub pull requests, CI, reviews and contribution grid |
-| [0.1.3](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.3) | Oct 3, 2026 | Answer Claude's questions from the notch, plan usage, local models, Apple Music |
-| [0.1.2](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.2) | Oct 2, 2026 | Codex and Cursor support, the permission card stays until you answer |
-| [0.1.1](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.1) | Oct 2, 2026 | Gemini and OpenAI chat, Linux build, more agents and pills, security hardening |
-| [0.1.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/v0.1.0) | Sep 27, 2026 | First release: Juno, Claude Code sessions, chat, file drop, integrations |
+| [0.6.0](https://github.com/Ak2201/jarvis/releases/tag/v0.6.0) | Nov 12, 2026 | Start a Claude Code session from the notch, drop a file on a session, ⌘⇧2 screenshot copied, approve Antigravity commands, Android phone link, Jarvisdoro |
+| [0.5.8](https://github.com/Ak2201/jarvis/releases/tag/v0.5.8) | Oct 31, 2026 | Fixes by @Ohualtex: approvals and questions stay put, desktop Juno stays visible, dropped files no longer overwrite each other |
+| [0.5.7](https://github.com/Ak2201/jarvis/releases/tag/v0.5.7) | Oct 31, 2026 | Mail in the notch: search, filters, reading, automatic sorting with rules and Undo, mail plans from the chat; search the settings; Jarvis in a corner of the screen |
+| [0.5.6](https://github.com/Ak2201/jarvis/releases/tag/v0.5.6) | Oct 30, 2026 | Chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot), switched on in Settings → Chat; Korean and Japanese |
+| [0.5.5](https://github.com/Ak2201/jarvis/releases/tag/v0.5.5) | Oct 29, 2026 | Chat on your Claude plan with no API key; each session apart behind its pill, questions side by side; Claude Code on a remote machine |
+| [0.5.4](https://github.com/Ak2201/jarvis/releases/tag/v0.5.4) | Oct 29, 2026 | Reliability: 25 community fixes — the hook server never gives up, your own hooks stay untouched, no crash without a mic, truer n8n, Stripe and GitHub pills |
+| [0.5.3](https://github.com/Ak2201/jarvis/releases/tag/v0.5.3) | Oct 22, 2026 | Juno turns blue when a new version waits; What's new and your Jarvis so far after each update; Buy Juno a coffee |
+| [0.5.2](https://github.com/Ak2201/jarvis/releases/tag/v0.5.2) | Oct 20, 2026 | New version in the notch, one click to install it; German, Turkish, Thai, Traditional Chinese; Homebrew; plan approval from the notch |
+| [0.5.1](https://github.com/Ak2201/jarvis/releases/tag/v0.5.1) | Oct 18, 2026 | WhatsApp in one click: Jarvis installs and starts the gateway, no Terminal |
+| [0.5.0](https://github.com/Ak2201/jarvis/releases/tag/v0.5.0) | Oct 18, 2026 | WhatsApp in the notch (experimental), Juno feels your Mac, a screen capture for Claude, dictation that writes prompts or translates |
+| [0.4.0](https://github.com/Ak2201/jarvis/releases/tag/v0.4.0) | Oct 14, 2026 | Jarvis becomes an app: Flow dictation anywhere, Parakeet offline, the Notetaker, a window in the Dock |
+| [0.3.0](https://github.com/Ak2201/jarvis/releases/tag/v0.3.0) | Oct 11, 2026 | « OK Jarvis »: talk to Juno, powered by Claude — pills, music, your services, web search, emails |
+| [0.2.3](https://github.com/Ak2201/jarvis/releases/tag/v0.2.3) | Oct 8, 2026 | Terminal sessions, Spotify, a colour per Juno, dictation in any language, open on hover, your own sounds |
+| [0.2.2](https://github.com/Ak2201/jarvis/releases/tag/v0.2.2) | Oct 8, 2026 | Choose Juno's screen, Claude Desktop pill, Codex plan usage, full questions, safer settings.json |
+| [0.2.1](https://github.com/Ak2201/jarvis/releases/tag/v0.2.1) | Oct 7, 2026 | Hermes Agent support |
+| [0.2.0](https://github.com/Ak2201/jarvis/releases/tag/v0.2.0) | Oct 6, 2026 | Copilot CLI, Muse Code, OpenCode and Amp, weekly recap, 10 languages |
+| [0.1.9](https://github.com/Ak2201/jarvis/releases/tag/v0.1.9) | Oct 6, 2026 | iPhone services with live details and actions, smarter Live Activity |
+| [0.1.8](https://github.com/Ak2201/jarvis/releases/tag/v0.1.8) | Oct 5, 2026 | Jarvis on iPhone: sessions, widgets, approvals with Face ID, Juno in the Dynamic Island |
+| [0.1.7](https://github.com/Ak2201/jarvis/releases/tag/v0.1.7) | Oct 4, 2026 | Keyboard shortcuts |
+| [0.1.6](https://github.com/Ak2201/jarvis/releases/tag/v0.1.6) | Oct 4, 2026 | Juno on the desktop |
+| [0.1.5](https://github.com/Ak2201/jarvis/releases/tag/v0.1.5) | Oct 4, 2026 | Wardrobe and seasonal outfits, new launch greeting |
+| [0.1.4](https://github.com/Ak2201/jarvis/releases/tag/v0.1.4) | Oct 3, 2026 | Live diffs, GitHub pull requests, CI, reviews and contribution grid |
+| [0.1.3](https://github.com/Ak2201/jarvis/releases/tag/v0.1.3) | Oct 3, 2026 | Answer Claude's questions from the notch, plan usage, local models, Apple Music |
+| [0.1.2](https://github.com/Ak2201/jarvis/releases/tag/v0.1.2) | Oct 2, 2026 | Codex and Cursor support, the permission card stays until you answer |
+| [0.1.1](https://github.com/Ak2201/jarvis/releases/tag/v0.1.1) | Oct 2, 2026 | Gemini and OpenAI chat, Linux build, more agents and pills, security hardening |
+| [0.1.0](https://github.com/Ak2201/jarvis/releases/tag/v0.1.0) | Sep 27, 2026 | First release: Juno, Claude Code sessions, chat, file drop, integrations |
 
-Windows and Linux are released together, under the `windows-v*` and `linux-v*` tags. The newest Windows installer is always at [`windows-latest`](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-latest), the newest Linux AppImage at [`linux-latest`](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-latest).
+Windows and Linux are released together, under the `windows-v*` and `linux-v*` tags. The newest Windows installer is always at [`windows-latest`](https://github.com/Ak2201/jarvis/releases/tag/windows-latest), the newest Linux AppImage at [`linux-latest`](https://github.com/Ak2201/jarvis/releases/tag/linux-latest).
 
 | Windows & Linux | Date | Highlights |
 |---------|------|------------|
-| 0.5.9 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.9) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.9) | Nov 3, 2026 | The island never disappears (Juno or the time when closed), ✕ to fold it, dictation keeps your language, your own dictation key, silence while you speak |
-| 0.5.8 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.8) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.8) | Oct 31, 2026 | 14 fixes and features by @Ohualtex: permission requests queue, Claude Desktop cards and pill, plan usage in the compact island, Flow pill in a corner |
-| 0.5.7 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.7) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.7) | Oct 31, 2026 | Mail with classic Outlook on Windows: search, filters, automatic sorting, mail plans from the chat; search the settings |
-| 0.5.6 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.6) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.6) | Oct 30, 2026 | Chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot); Korean and Japanese |
-| 0.5.5 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.5) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.5) | Oct 29, 2026 | No API key? Your own Claude Code answers the chat, Flow's clean-up and the notes of a call, on your Claude plan |
-| 0.5.4 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.4) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.4) | Oct 29, 2026 | Reliability: 25 community fixes — the hook server never gives up, approval cards go when the terminal takes over, a sturdier Flow pill, WhatsApp group names |
-| 0.5.3 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.3) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.3) | Oct 22, 2026 | WhatsApp in the island (experimental): one-click gateway install, your chats and replies |
-| 0.5.2 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.2) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.2) | Oct 22, 2026 | Juno turns blue when a new version waits, What's new after each update; GitLab and Gitea pills; the weekly recap on Android |
-| 0.5.1 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.1) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.1) | Oct 20, 2026 | New version in the island, one click to install it on Windows; German and Turkish; an optional clock; Linux idle CPU fixed |
-| 0.5.0 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.5.0) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.0) | Oct 15, 2026 | Catches up with the Mac: the Jarvis window, Flow dictation with Parakeet offline (X11 and Wayland), the Notetaker, « OK Jarvis » |
-| 0.4.0 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.4.0) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.4.0) | Oct 11, 2026 | Your Android phone: the link for Jarvis for Android, by @Rhytam23 — approvals with your fingerprint, answers, chat, off by default |
-| 0.3.0 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.3.0) · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.3.0) | Oct 9, 2026 | Linux catches up: Spotify with Juno dancing, global shortcuts on Wayland, Open terminal brings the terminal back; open on hover, your own sounds, a colour per Juno |
-| 0.2.0 · [Windows](https://github.com/YOUR-GITHUB/jarvis/releases/tag/windows-v0.2.0) | Oct 8, 2026 | Catches up with the Mac: nine agents with approvals, chat with any AI, plan usage, GitHub, wardrobe, 10 languages |
-| 0.1.1 · [Linux](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.1.1) | Oct 1, 2026 | First Linux build (beta) |
+| 0.5.9 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.9) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.9) | Nov 3, 2026 | The island never disappears (Juno or the time when closed), ✕ to fold it, dictation keeps your language, your own dictation key, silence while you speak |
+| 0.5.8 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.8) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.8) | Oct 31, 2026 | 14 fixes and features by @Ohualtex: permission requests queue, Claude Desktop cards and pill, plan usage in the compact island, Flow pill in a corner |
+| 0.5.7 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.7) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.7) | Oct 31, 2026 | Mail with classic Outlook on Windows: search, filters, automatic sorting, mail plans from the chat; search the settings |
+| 0.5.6 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.6) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.6) | Oct 30, 2026 | Chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot); Korean and Japanese |
+| 0.5.5 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.5) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.5) | Oct 29, 2026 | No API key? Your own Claude Code answers the chat, Flow's clean-up and the notes of a call, on your Claude plan |
+| 0.5.4 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.4) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.4) | Oct 29, 2026 | Reliability: 25 community fixes — the hook server never gives up, approval cards go when the terminal takes over, a sturdier Flow pill, WhatsApp group names |
+| 0.5.3 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.3) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.3) | Oct 22, 2026 | WhatsApp in the island (experimental): one-click gateway install, your chats and replies |
+| 0.5.2 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.2) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.2) | Oct 22, 2026 | Juno turns blue when a new version waits, What's new after each update; GitLab and Gitea pills; the weekly recap on Android |
+| 0.5.1 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.1) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.1) | Oct 20, 2026 | New version in the island, one click to install it on Windows; German and Turkish; an optional clock; Linux idle CPU fixed |
+| 0.5.0 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.5.0) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.0) | Oct 15, 2026 | Catches up with the Mac: the Jarvis window, Flow dictation with Parakeet offline (X11 and Wayland), the Notetaker, « OK Jarvis » |
+| 0.4.0 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.4.0) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.4.0) | Oct 11, 2026 | Your Android phone: the link for Jarvis for Android, by @Rhytam23 — approvals with your fingerprint, answers, chat, off by default |
+| 0.3.0 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.3.0) · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.3.0) | Oct 9, 2026 | Linux catches up: Spotify with Juno dancing, global shortcuts on Wayland, Open terminal brings the terminal back; open on hover, your own sounds, a colour per Juno |
+| 0.2.0 · [Windows](https://github.com/Ak2201/jarvis/releases/tag/windows-v0.2.0) | Oct 8, 2026 | Catches up with the Mac: nine agents with approvals, chat with any AI, plan usage, GitHub, wardrobe, 10 languages |
+| 0.1.1 · [Linux](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.1.1) | Oct 1, 2026 | First Linux build (beta) |
 
 Jarvis for Android, by [@Rhytam23](https://github.com/Rhytam23), is released under the `android-v*` tags.
 
 | Android | Date | Highlights |
 |---------|------|------------|
-| [0.3.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.3.0) | Oct 22, 2026 | A light theme and your phone's colours, nine more languages (Arabic right to left), quick actions, a Team widget, Share to Jarvis, the weekly recap, a per-agent mute |
-| [0.2.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.2.0) | Oct 13, 2026 | Nine home-screen widgets: Juno, your agents, plan usage and quick buttons, coloured by state |
-| [0.1.0](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.1.0) | Oct 11, 2026 | First release: your agents, approvals with your fingerprint, answers and chat, linked to Windows or Linux |
+| [0.3.0](https://github.com/Ak2201/jarvis/releases/tag/android-v0.3.0) | Oct 22, 2026 | A light theme and your phone's colours, nine more languages (Arabic right to left), quick actions, a Team widget, Share to Jarvis, the weekly recap, a per-agent mute |
+| [0.2.0](https://github.com/Ak2201/jarvis/releases/tag/android-v0.2.0) | Oct 13, 2026 | Nine home-screen widgets: Juno, your agents, plan usage and quick buttons, coloured by state |
+| [0.1.0](https://github.com/Ak2201/jarvis/releases/tag/android-v0.1.0) | Oct 11, 2026 | First release: your agents, approvals with your fingerprint, answers and chat, linked to Windows or Linux |
 
 ## Demo mode
 
@@ -199,7 +199,7 @@ Everything else, troubleshooting included, is in [docs/IPHONE.md](docs/IPHONE.md
 
 ### Android
 
-1. **Download** `Jarvis-Android-0.3.0.apk` from the [release page](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.3.0) on your phone (Android 11 or later) and open it. Android asks once to allow installs from your browser or file manager. You can also [build it from source](#build-from-source).
+1. **Download** `Jarvis-Android-0.3.0.apk` from the [release page](https://github.com/Ak2201/jarvis/releases/tag/android-v0.3.0) on your phone (Android 11 or later) and open it. Android asks once to allow installs from your browser or file manager. You can also [build it from source](#build-from-source).
 2. **On your computer**, install Jarvis **0.4.0 or later** for [Windows](#windows) or [Linux](#linux): **Settings → Android phone**, turn on **Phone link**. If Windows asks about the firewall, allow Jarvis on private networks.
 3. **Show pairing code** and scan it with the app. The phone and the computer must be on the same Wi-Fi.
 
@@ -208,7 +208,7 @@ Everything else, troubleshooting included, is in [`android/README.md`](android/R
 ### Homebrew (macOS)
 
 ```bash
-brew tap louis-cfm/jarvis https://github.com/YOUR-GITHUB/jarvis
+brew tap louis-cfm/jarvis https://github.com/Ak2201/jarvis
 brew install --cask jarvis
 ```
 
@@ -216,13 +216,13 @@ It installs the same signed and notarized GitHub build as the download below. Ja
 
 ### Download for macOS
 
-1. Grab the latest `Jarvis.zip` from [Releases](https://github.com/YOUR-GITHUB/jarvis/releases).
+1. Grab the latest `Jarvis.zip` from [Releases](https://github.com/Ak2201/jarvis/releases).
 2. Unzip and move **Jarvis.app** to `/Applications`.
 3. Launch it, and click **Open** when macOS asks you to confirm. Updating from 0.1.0? macOS may ask you, once for each key you saved, to let Jarvis use it: enter your Mac password and click **Always Allow**.
 
 ### Windows
 
-Download **[Jarvis-Windows.msi](https://github.com/YOUR-GITHUB/jarvis/releases/download/windows-latest/Jarvis-Windows.msi)** or **[Jarvis-Windows-setup.exe](https://github.com/YOUR-GITHUB/jarvis/releases/download/windows-latest/Jarvis-Windows-setup.exe)** (Windows 10/11, always the newest version) and run it. You can also [build it from source](#build-from-source).
+Download **[Jarvis-Windows.msi](https://github.com/Ak2201/jarvis/releases/download/windows-latest/Jarvis-Windows.msi)** or **[Jarvis-Windows-setup.exe](https://github.com/Ak2201/jarvis/releases/download/windows-latest/Jarvis-Windows-setup.exe)** (Windows 10/11, always the newest version) and run it. You can also [build it from source](#build-from-source).
 
 **Windows will show a warning the first time — that's expected.** The installer isn't code-signed yet, so SmartScreen doesn't know the publisher:
 
@@ -242,7 +242,7 @@ rest of the differences.
 
 ### Linux
 
-**Jarvis for Linux 0.5.9** is out (x86_64): [AppImage](https://github.com/YOUR-GITHUB/jarvis/releases/download/linux-v0.5.9/Jarvis-Linux-0.5.9-x86_64.AppImage) · [.deb](https://github.com/YOUR-GITHUB/jarvis/releases/download/linux-v0.5.9/Jarvis-Linux-0.5.9-amd64.deb) · [.rpm](https://github.com/YOUR-GITHUB/jarvis/releases/download/linux-v0.5.9/Jarvis-Linux-0.5.9-x86_64.rpm) · [all files and checksums](https://github.com/YOUR-GITHUB/jarvis/releases/tag/linux-v0.5.9). The newest AppImage is always at [`linux-latest`](https://github.com/YOUR-GITHUB/jarvis/releases/download/linux-latest/Jarvis-Linux-x86_64.AppImage).
+**Jarvis for Linux 0.5.9** is out (x86_64): [AppImage](https://github.com/Ak2201/jarvis/releases/download/linux-v0.5.9/Jarvis-Linux-0.5.9-x86_64.AppImage) · [.deb](https://github.com/Ak2201/jarvis/releases/download/linux-v0.5.9/Jarvis-Linux-0.5.9-amd64.deb) · [.rpm](https://github.com/Ak2201/jarvis/releases/download/linux-v0.5.9/Jarvis-Linux-0.5.9-x86_64.rpm) · [all files and checksums](https://github.com/Ak2201/jarvis/releases/tag/linux-v0.5.9). The newest AppImage is always at [`linux-latest`](https://github.com/Ak2201/jarvis/releases/download/linux-latest/Jarvis-Linux-x86_64.AppImage).
 
 - **AppImage** (any distribution): `chmod +x Jarvis-Linux-*.AppImage`, then run it.
 - **Debian / Ubuntu**: `sudo apt install ./Jarvis-Linux-*.deb`
@@ -261,7 +261,7 @@ Jarvis has a Nix flake for `x86_64-linux` and `aarch64-linux`. It builds Jarvis 
 **Try it** without installing anything:
 
 ```bash
-nix run github:YOUR-GITHUB/jarvis
+nix run github:Ak2201/jarvis
 ```
 
 Flakes not turned on yet? Add `--extra-experimental-features 'nix-command flakes'` after `nix`.
@@ -272,7 +272,7 @@ Flakes not turned on yet? Add `--extra-experimental-features 'nix-command flakes
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    jarvis.url = "github:YOUR-GITHUB/jarvis";
+    jarvis.url = "github:Ak2201/jarvis";
   };
 
   outputs = { nixpkgs, jarvis, ... }: {
@@ -300,7 +300,7 @@ nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "ja
 environment.systemPackages = [ pkgs.jarvis ];
 ```
 
-**Update** with `nix flake update jarvis`, then rebuild. The input follows `main`; to stay on releases, point it at a tag instead, like `github:YOUR-GITHUB/jarvis/linux-v0.6.0` (from the first release that has the flake). Jarvis's own update card only links to the release page on Linux, so it never touches your system.
+**Update** with `nix flake update jarvis`, then rebuild. The input follows `main`; to stay on releases, point it at a tag instead, like `github:Ak2201/jarvis/linux-v0.6.0` (from the first release that has the flake). Jarvis's own update card only links to the release page on Linux, so it never touches your system.
 
 **Good to know**
 
@@ -317,7 +317,7 @@ environment.systemPackages = [ pkgs.jarvis ];
 
 ```bash
 brew install xcodegen
-git clone https://github.com/YOUR-GITHUB/jarvis.git
+git clone https://github.com/Ak2201/jarvis.git
 cd jarvis/NotchBuddy
 xcodegen
 open NotchBuddy.xcodeproj   # then ⌘R
@@ -326,7 +326,7 @@ open NotchBuddy.xcodeproj   # then ⌘R
 **Windows** — requirements: [Rust](https://rustup.rs), Node 20+, MSVC build tools.
 
 ```powershell
-git clone https://github.com/YOUR-GITHUB/jarvis.git
+git clone https://github.com/Ak2201/jarvis.git
 cd jarvis/windows
 npm install
 npm run pack                # installer lands in windows/release/
@@ -340,7 +340,7 @@ sudo apt install build-essential pkg-config \
   libwebkit2gtk-4.1-dev libgtk-layer-shell-dev libayatana-appindicator3-dev \
   librsvg2-dev libssl-dev libdbus-1-dev patchelf \
   gstreamer1.0-plugins-base gstreamer1.0-plugins-good
-git clone https://github.com/YOUR-GITHUB/jarvis.git
+git clone https://github.com/Ak2201/jarvis.git
 cd jarvis/windows
 npm install
 npm run pack                # AppImage, .deb and .rpm land in windows/release/
@@ -351,7 +351,7 @@ On NixOS, `nix develop` gives you all of this: then `cd windows && npm ci && npm
 **Android** — requirements: JDK 17 and the Android SDK (platform 35).
 
 ```bash
-git clone https://github.com/YOUR-GITHUB/jarvis.git
+git clone https://github.com/Ak2201/jarvis.git
 cd jarvis/android
 ./gradlew assembleDebug      # the APK lands in app/build/outputs/apk/debug/
 ```
@@ -520,7 +520,7 @@ Want to add or improve a translation? Open a PR with changes to `NotchBuddy/Reso
 
 Jarvis is a fork of [Coucou](https://github.com/louis-cfm/coucou) by Louis Raillé (MIT). Customized by the Jarvis team.
 Jarvis for Android and the phone link by [Rhytam Biswas (@Rhytam23)](https://github.com/Rhytam23).
-Thanks to everyone who sent a pull request — see [contributors](https://github.com/YOUR-GITHUB/jarvis/graphs/contributors).
+Thanks to everyone who sent a pull request — see [contributors](https://github.com/Ak2201/jarvis/graphs/contributors).
 Inspired by the notch-companion concepts shared by design studios — this project is independent and not affiliated with any of them.
 
 ## License
@@ -532,6 +532,6 @@ Inspired by the notch-companion concepts shared by design studios — this proje
 
 **If Juno made you smile, a ⭐ helps a lot.**
 
-[Website](https://YOUR-GITHUB.github.io/jarvis/) · [Privacy](https://YOUR-GITHUB.github.io/jarvis/privacy.html) · [Terms](https://YOUR-GITHUB.github.io/jarvis/terms.html) · [Support](https://YOUR-GITHUB.github.io/jarvis/support.html)
+[Website](https://Ak2201.github.io/jarvis/) · [Privacy](https://Ak2201.github.io/jarvis/privacy.html) · [Terms](https://Ak2201.github.io/jarvis/terms.html) · [Support](https://Ak2201.github.io/jarvis/support.html)
 
 </div>

@@ -220,7 +220,7 @@ New versions now come to you: Juno says it in the notch and one click installs i
 
 - **New version in the notch** *(macOS, GitHub build)* — Jarvis asks once whether it may look at its releases on GitHub; then, a few times a day, Juno tells you when a new Jarvis is out: **Update now**, What's new, Later. The click downloads it from GitHub, checks it is Jarvis at the announced version, signed with its developer's Developer ID and notarized by Apple, swaps the app and restarts. Also in the menu bar and in Settings → General → Updates (Check now). Nothing is checked before you say yes, and nothing about you is sent
 - **Four new languages** — German and Turkish (by @Ohualtex), Thai (by @XBalanceZ) and Traditional Chinese (by @shawn-t516): 14 languages in Settings → General → Language
-- **Homebrew** — `brew tap louis-cfm/jarvis https://github.com/YOUR-GITHUB/jarvis`, then `brew install --cask jarvis` (#340 by @espensgr)
+- **Homebrew** — `brew tap louis-cfm/jarvis https://github.com/Ak2201/jarvis`, then `brew install --cask jarvis` (#340 by @espensgr)
 - **Plan approval from the notch** — when Claude Code has a plan ready, the card offers the terminal's own choices: Auto mode, Manual, or Change plan, which brings the terminal forward to type the change (#703 by @orrrrli)
 - **The pill's name** — a Claude Code session's pill is named after its `/rename` title, else the folder it started in (no longer the subfolder it moved into), and with several sessions it follows the one that is working (#761 by @orrrrli)
 - **Quiet when you're watching** — a turn that ends while its terminal is in front only takes a badge: no sound, no reveal (#719 by @orrrrli)
@@ -288,7 +288,7 @@ Jarvis becomes a real app: a window in the Dock, dictation everywhere on the Mac
 
 ## Android 0.1.0 — October 11, 2026
 
-- **Jarvis for Android**, by @Rhytam23 — your agents, Allow and Deny with your fingerprint or screen lock (even on a locked phone), answers to Claude's questions, chat through the computer's own keys, plan usage and services, an optional island over other apps, a widget, a quick-settings tile and an ongoing notification. It pairs with Jarvis 0.4.0 or later on Windows or Linux. Android 11 or later, English only; a signed APK on the [release page](https://github.com/YOUR-GITHUB/jarvis/releases/tag/android-v0.1.0) (#501 by @Rhytam23)
+- **Jarvis for Android**, by @Rhytam23 — your agents, Allow and Deny with your fingerprint or screen lock (even on a locked phone), answers to Claude's questions, chat through the computer's own keys, plan usage and services, an optional island over other apps, a widget, a quick-settings tile and an ongoing notification. It pairs with Jarvis 0.4.0 or later on Windows or Linux. Android 11 or later, English only; a signed APK on the [release page](https://github.com/Ak2201/jarvis/releases/tag/android-v0.1.0) (#501 by @Rhytam23)
 
 ## Windows and Linux 0.4.0 — October 11, 2026
 
