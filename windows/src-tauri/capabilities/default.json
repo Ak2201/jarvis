@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "What Jarvis's windows are allowed to do. Everything that touches the OS goes through Jarvis's own commands.",
+  "windows": ["island", "settings", "juno", "pill"],
+  "permissions": ["core:default", "autostart:default"]
+}
