@@ -33,6 +33,13 @@ struct ClaudeHost: Equatable {
         "com.stablyai.orca":          "Orca",
         "com.conductor.app":          "Conductor", // runs Claude Code with no TERM_PROGRAM
         "com.t3tools.t3code": "T3 Code",
+        // IDEs with a built-in terminal: Claude Code there inherits the IDE's bundle id and no
+        // TERM_PROGRAM, so without these the sessions were ignored.
+        "com.google.android.studio":     "Android Studio",
+        "com.google.android.studio-EAP": "Android Studio",
+        "com.apple.dt.Xcode":            "Xcode",
+        "com.jetbrains.intellij":        "IntelliJ IDEA",
+        "com.jetbrains.intellij.ce":     "IntelliJ IDEA",
     ]
     private static let termPrograms: [String: String] = [
         "warpterminal":   "dev.warp.Warp-Stable",

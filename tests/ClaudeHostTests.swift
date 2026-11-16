@@ -24,6 +24,12 @@ enum ClaudeHostTests {
               ClaudeHost.terminal(termProgram: "", bundleId: "com.conductor.app")?.name == "Conductor")
         check("Conductor keeps its own bundle id",
               ClaudeHost.terminal(termProgram: "", bundleId: "com.conductor.app")?.bundleId == "com.conductor.app")
+        check("Android Studio's terminal by bundle id",
+              ClaudeHost.terminal(termProgram: "", bundleId: "com.google.android.studio")?.name == "Android Studio")
+        check("Android Studio Preview", ClaudeHost.terminal(termProgram: "", bundleId: "com.google.android.studio-EAP")?.name == "Android Studio")
+        check("Xcode by bundle id", ClaudeHost.terminal(termProgram: "", bundleId: "com.apple.dt.Xcode")?.name == "Xcode")
+        check("Android Studio session → Claude Code", ClaudeHost.pillName(hostApp: "com.google.android.studio") == "Claude Code")
+        check("Android Studio host name", ClaudeHost.name(for: "com.google.android.studio") == "Android Studio")
         check("VS Code → nil", ClaudeHost.terminal(termProgram: "vscode", bundleId: "com.microsoft.VSCode") == nil)
         check("Cursor → nil", ClaudeHost.terminal(termProgram: "vscode", bundleId: "com.todesktop.230313mzl4w4u92") == nil)
         check("unknown → nil", ClaudeHost.terminal(termProgram: "", bundleId: "com.example.app") == nil)
