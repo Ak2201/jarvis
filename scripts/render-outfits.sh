@@ -18,6 +18,10 @@ swiftc \
   NotchBuddy/Sources/JarvisKit/JunoWardrobe.swift \
   NotchBuddy/Sources/JarvisKit/BotEngine.swift \
   NotchBuddy/Sources/JarvisKit/JunoOutfitDrawing.swift \
+  NotchBuddy/Sources/JarvisKit/PillCatalog.swift \
+  NotchBuddy/Sources/JarvisKit/ColorHex.swift \
+  NotchBuddy/Sources/JarvisKit/JunoMood.swift \
+  NotchBuddy/Sources/JarvisKit/PillColors.swift \
   scripts/RenderOutfits.swift \
   -framework AppKit \
   -framework SwiftUI \
@@ -27,4 +31,4 @@ swiftc \
 echo "Running renderer..."
 /tmp/jarvis-render-outfits
 echo "Opening..."
-open /tmp/jarvis-outfits.png
+[ -n "$NO_OPEN" ] || open /tmp/jarvis-outfits.png

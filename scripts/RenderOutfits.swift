@@ -34,14 +34,59 @@ extension Notification.Name {
     static let openFullSettings  = Notification.Name("notchBuddy.openFullSettings")
 }
 
-extension Color {
-    init(hex: String) {
-        let h = hex.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
-        let val = UInt64(h, radix: 16) ?? 0
-        let r = Double((val >> 16) & 0xFF) / 255
-        let g = Double((val >> 8)  & 0xFF) / 255
-        let b = Double( val        & 0xFF) / 255
-        self.init(red: r, green: g, blue: b)
+
+// MARK: - Engine grid — the real BotEngine in each state, turned three ways
+
+struct EngineGrid: View {
+    let states: [BotState] = BotState.allCases
+    let looks: [(String, CGFloat, Outfit)] = [("L", -0.45, .none), ("front", 0, .none), ("R", 0.45, .none),
+                                              ("beanie", 0, .beanie), ("glasses", 0.2, .sunglasses)]
+    let cell: CGFloat = 150
+
+    var body: some View {
+        VStack(spacing: 6) {
+            HStack(spacing: 6) {
+                Text("").frame(width: 90)
+                ForEach(looks.indices, id: \.self) { i in
+                    Text(looks[i].0).font(.system(size: 11, design: .monospaced)).foregroundColor(.gray).frame(width: cell)
+                }
+            }
+            ForEach(states, id: \.self) { st in
+                HStack(spacing: 6) {
+                    Text(st.rawValue).font(.system(size: 12, weight: .medium)).foregroundColor(.white).frame(width: 90, alignment: .trailing)
+                    ForEach(looks.indices, id: \.self) { i in
+                        EngineCell(state: st, yaw: looks[i].1, outfit: looks[i].2)
+                            .frame(width: cell, height: cell)
+                            .background(Color(red: 0.08, green: 0.08, blue: 0.09))
+                            .cornerRadius(10)
+                    }
+                }
+            }
+        }
+        .padding(20)
+        .background(Color.black)
+    }
+}
+
+struct EngineCell: View {
+    let state: BotState
+    let yaw: CGFloat
+    let outfit: Outfit
+
+    var body: some View {
+        Canvas { context, size in
+            let e = BotEngine()
+            e.setOutfit(outfit, animated: false)
+            e.setState(state, force: true)
+            for _ in 0..<120 { e.update(dt: 1.0 / 60) }
+            e.yaw = yaw
+            e.open = 1
+            e.drawHandsBehind(context: context, size: size)
+            e.drawOutfitBehind(context: context, size: size)
+            e.draw(context: context, size: size)
+            e.drawOutfitFront(context: context, size: size)
+            e.drawHandsAndExtras(context: context, size: size)
+        }
     }
 }
 
@@ -323,6 +368,7 @@ private func renderAndSave<V: View>(_ view: V, path: String) {
 struct RenderOutfits {
     static func main() {
         MainActor.assumeIsolated {
+            renderAndSave(EngineGrid(),      path: "/tmp/jarvis-engine.png")
             renderAndSave(OutfitGrid(),      path: "/tmp/jarvis-outfits.png")
             renderAndSave(RollGrid(),        path: "/tmp/jarvis-roll.png")
             renderAndSave(TransitionGrid(),  path: "/tmp/jarvis-transition.png")

@@ -306,8 +306,8 @@ struct UploadCanvasView: View {
 
         // ── Body gradient ──────────────────────────────────────────
         let bodyGrad = Gradient(stops:[
-            .init(color: Color(hex:"#EDEDEF"), location:0),
-            .init(color: Color(hex:"#C4C5CA"), location:1)
+            .init(color: Color(cgColor: JunoConst.baseTop), location:0),
+            .init(color: Color(cgColor: JunoConst.baseBottom), location:1)
         ])
         c.fill(bp, with: .linearGradient(bodyGrad,
             startPoint:  CGPoint(x:  rx*0.7, y: -ry*0.9),
@@ -371,6 +371,16 @@ struct UploadCanvasView: View {
 
         var eCtx = c
         eCtx.clip(to: bp)
+        // Glass visor, fading out as Juno becomes the box
+        if mc < 0.98 {
+            let vw = CGFloat(sp * 2 + ew * 2.1), vh = CGFloat(eh + ew * 0.9)
+            let vr = CGRect(x: CGFloat(lx) - vw/2, y: CGFloat(ey+ly) - vh/2, width: vw, height: vh)
+            var vc = eCtx
+            vc.opacity = 1 - mc
+            vc.fill(Path(roundedRect: vr, cornerRadius: vh/2), with: .linearGradient(
+                Gradient(colors: [Color(cgColor: JunoConst.visorTop), Color(cgColor: JunoConst.visorBottom)]),
+                startPoint: CGPoint(x: 0, y: vr.minY), endPoint: CGPoint(x: 0, y: vr.maxY)))
+        }
         for sd in [-1.0, 1.0] {
             var ec = eCtx
             ec.concatenate(CGAffineTransform(translationX: CGFloat(sd*sp+lx), y: CGFloat(ey+ly)))
@@ -381,7 +391,7 @@ struct UploadCanvasView: View {
     // MARK: - Eye shapes
 
     private func drawEyeShape(ctx: inout GraphicsContext, shape: USEyeShape, w: CGFloat, h: CGFloat) {
-        let ink = Color(red:0.055,green:0.059,blue:0.071)
+        let ink = Color(cgColor: JunoConst.ink)
         switch shape {
         case .pill:
             var p = Path()
@@ -563,8 +573,10 @@ func usBodyPath(m: Double, R: Double) -> (path: Path, rx: Double, ry: Double) {
     for i in 0...96 {
         let a  = Double(i)/96 * .pi*2
         let ca = cos(a), sa = sin(a)
-        let px = rx * (ca<0 ? -1 : ca>0 ? 1 : 0) * pow(abs(ca), 2/n)
-        let py = ry * (sa<0 ? -1 : sa>0 ? 1 : 0) * pow(abs(sa), 2/n)
+        // Juno's dome (JunoShape) at rest, a rounded box as the morph completes
+        let nn = sa < 0 ? JunoShape.topExp + (n - 2.15) : JunoShape.bottomExp + (n - 2.15) * (5.5 - JunoShape.bottomExp) / (5.5 - 2.15)
+        let px = rx * (ca<0 ? -1 : ca>0 ? 1 : 0) * pow(abs(ca), 2/nn)
+        let py = ry * (sa<0 ? -1 : sa>0 ? 1 : 0) * pow(abs(sa), 2/nn)
         if i == 0 { path.move(to:    CGPoint(x:px,y:py)) }
         else       { path.addLine(to: CGPoint(x:px,y:py)) }
     }

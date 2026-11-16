@@ -325,25 +325,14 @@ private func gRR(_ ctx: CGContext, _ x: CGFloat, _ y: CGFloat,
 }
 
 private func junoPath(hw: CGFloat, hh: CGFloat) -> CGPath {
-    let n: CGFloat = 3.2
-    let path = CGMutablePath()
-    let steps = 96
-    for i in 0...steps {
-        let a = CGFloat(i)/CGFloat(steps)*2 * .pi
-        let ca = cos(a), sa = sin(a)
-        let px = hw * (ca < 0 ? -1 : 1) * pow(abs(ca), 2/n)
-        let py = hh * (sa < 0 ? -1 : 1) * pow(abs(sa), 2/n)
-        if i == 0 { path.move(to: CGPoint(x: px, y: py)) }
-        else { path.addLine(to: CGPoint(x: px, y: py)) }
-    }
-    path.closeSubpath(); return path
+    JunoShape.path(rx: hw, ry: hh).cgPath
 }
 
 private func whiteFill(_ ctx: CGContext, _ path: CGPath,
                        x0: CGFloat, y0: CGFloat, x1: CGFloat, y1: CGFloat) {
     let cs = CGColorSpaceCreateDeviceRGB()
-    let c0 = CGColor(red: 251/255, green: 251/255, blue: 252/255, alpha: 1)
-    let c1 = CGColor(red: 231/255, green: 233/255, blue: 236/255, alpha: 1)
+    let c0 = JunoConst.baseTop
+    let c1 = JunoConst.baseBottom
     guard let g = CGGradient(colorsSpace: cs, colors: [c0,c1] as CFArray, locations: [0,1]) else { return }
     ctx.saveGState()
     ctx.addPath(path); ctx.clip()
@@ -447,6 +436,20 @@ private func drawJuno(_ ctx: CGContext, p: GreetPose) {
     drawHandL(ctx, hw: hw, hh: hh, p: p)
     drawHandR(ctx, hw: hw, hh: hh, p: p)
 
+    // Antenna behind the dome, with its status light
+    let gR = hh / 0.88
+    ctx.saveGState()
+    ctx.setStrokeColor(JunoConst.antenna)
+    ctx.setLineWidth(max(1, gR * 0.07)); ctx.setLineCap(.round)
+    ctx.move(to: CGPoint(x: 0, y: -hh * 0.92))
+    ctx.addLine(to: CGPoint(x: 0, y: -hh * 0.92 - gR * 0.42))
+    ctx.strokePath()
+    ctx.setFillColor(JunoConst.ink)
+    let tipR = gR * 0.105
+    ctx.addEllipse(in: CGRect(x: -tipR, y: -hh * 0.92 - gR * 0.42 - tipR, width: tipR * 2, height: tipR * 2))
+    ctx.fillPath()
+    ctx.restoreGState()
+
     let mpath = junoPath(hw: hw, hh: hh)
     whiteFill(ctx, mpath, x0: hw*0.6, y0: -hh, x1: -hw*0.6, y1: hh)
 
@@ -465,12 +468,20 @@ private func drawJuno(_ ctx: CGContext, p: GreetPose) {
 
     ctx.saveGState()
     ctx.addPath(mpath); ctx.clip()
-    ctx.setFillColor(gHex("#16171A"))
-    ctx.setStrokeColor(gHex("#16171A"))
     let er = CGFloat(p.hb*0.06)
     let sp = CGFloat(p.hb*0.19)
     let lx = CGFloat(p.lookX)*hw*0.42
     let ly = CGFloat(p.lookY)*hh*0.28 + hh*0.12 + CGFloat(p.eyeRoll)*hh*1.25
+    // Glass visor the eyes glow on
+    let vw = sp * 2 + er * 5.2, vh = er * 4.6
+    let visor = CGPath(roundedRect: CGRect(x: lx - vw/2, y: ly - vh/2, width: vw, height: vh),
+                       cornerWidth: vh/2, cornerHeight: vh/2, transform: nil)
+    ctx.addPath(visor)
+    ctx.setFillColor(JunoConst.visorBottom)
+    ctx.fillPath()
+    ctx.setShadow(offset: .zero, blur: er * 1.4, color: JunoConst.ink)
+    ctx.setFillColor(JunoConst.ink)
+    ctx.setStrokeColor(JunoConst.ink)
     for sd: CGFloat in [-1, 1] {
         ctx.saveGState()
         ctx.translateBy(x: sd*sp+lx, y: ly)

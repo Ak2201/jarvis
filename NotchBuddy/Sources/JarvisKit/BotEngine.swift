@@ -81,9 +81,12 @@ enum JunoConst {
     static let eyeH: CGFloat  = 0.27
     static let eyeSp: CGFloat = 0.37
     static let eyeP: CGFloat  = -0.12
-    static let baseTop    = CGColor(red: 0.929, green: 0.929, blue: 0.937, alpha: 1)  // #EDEDEF
-    static let baseBottom = CGColor(red: 0.769, green: 0.773, blue: 0.792, alpha: 1)  // #C4C5CA
-    static let ink        = CGColor(red: 0.102, green: 0.082, blue: 0.071, alpha: 1)  // #1A1412
+    static let baseTop    = CGColor(red: 0.949, green: 0.957, blue: 0.969, alpha: 1)  // #F2F4F7
+    static let baseBottom = CGColor(red: 0.737, green: 0.765, blue: 0.808, alpha: 1)  // #BCC3CE
+    static let ink        = CGColor(red: 0.310, green: 0.827, blue: 1.000, alpha: 1)  // #4FD3FF, LED eyes
+    static let visorTop   = CGColor(red: 0.090, green: 0.137, blue: 0.220, alpha: 1)  // #172338
+    static let visorBottom = CGColor(red: 0.043, green: 0.071, blue: 0.125, alpha: 1) // #0B1220
+    static let antenna    = CGColor(red: 0.773, green: 0.796, blue: 0.835, alpha: 1)  // #C5CBD5
     static let miniInk    = CGColor(red: 0.063, green: 0.075, blue: 0.102, alpha: 1)  // #10131A
 }
 
@@ -1141,8 +1144,11 @@ final class BotEngine: ObservableObject {
         if tilt != 0 { ctx.rotate(by: .radians(tilt)) }
         ctx.scaleBy(x: sx, y: sy)
 
-        // Body path (superellipse for Juno, morph to rect for upload)
+        // Body path (dome for Juno, morph to rect for upload)
         let bodyPath = junoPath(rx: rx, ry: ry, morph: morph, R: R)
+
+        // Antenna, behind the body so its stem grows out of the dome.
+        drawAntenna(ctx: &ctx, R: R, ry: ry)
 
         // Body fill
         drawBody(ctx: &ctx, path: bodyPath, R: R, rx: rx, ry: ry,
@@ -1156,6 +1162,9 @@ final class BotEngine: ObservableObject {
         if blushVal > 0.01 {
             drawBlush(ctx: &ctx, path: bodyPath, rx: rx, ry: ry, R: R, blush: blushVal)
         }
+
+        // Glass visor the eyes glow on
+        drawVisor(ctx: &ctx, path: bodyPath, R: R, rx: rx, ry: ry)
 
         // Eyes
         drawEyes(ctx: &ctx, path: bodyPath, R: R, rx: rx, ry: ry)
@@ -1381,7 +1390,6 @@ final class BotEngine: ObservableObject {
 
     private func junoPath(rx: CGFloat, ry: CGFloat, morph: CGFloat, R: CGFloat) -> Path {
         let n = 72
-        let expN: CGFloat = 2.0 / 2.7
         // Target mailbox dims (spec: 1.0R wide, 0.94R tall, 0.42R corner radius)
         let tw = R * 1.0
         let th = R * 0.94
@@ -1390,8 +1398,8 @@ final class BotEngine: ObservableObject {
         for i in 0...n {
             let a = CGFloat(i) / CGFloat(n) * .pi * 2
             let ca = cos(a), sa = sin(a)
-            let px0 = rx * (ca >= 0 ? pow(ca, expN) : -pow(-ca, expN))
-            let py0 = ry * (sa >= 0 ? pow(sa, expN) : -pow(-sa, expN))
+            let p0 = JunoShape.point(ca: ca, sa: sa, rx: rx, ry: ry)
+            let px0 = p0.x, py0 = p0.y
             let px: CGFloat
             let py: CGFloat
             if morph < 0.005 {
@@ -1456,8 +1464,8 @@ final class BotEngine: ObservableObject {
             ctx.fill(path, with: .color(Color(cgColor: bc)))
         } else {
             // Main bot: linear gradient body
-            let top: Color = pumpkinColors ? Color(hex: "#FFA94D") : Color(red: 0.929, green: 0.929, blue: 0.937)
-            let bot: Color = pumpkinColors ? Color(hex: "#E8590C") : Color(red: 0.769, green: 0.773, blue: 0.792)
+            let top: Color = pumpkinColors ? Color(hex: "#FFA94D") : Color(cgColor: JunoConst.baseTop)
+            let bot: Color = pumpkinColors ? Color(hex: "#E8590C") : Color(cgColor: JunoConst.baseBottom)
             ctx.fill(path, with: .linearGradient(
                 Gradient(colors: [top, bot]),
                 startPoint: CGPoint(x: rx*0.7, y: -ry*0.85),
@@ -1498,15 +1506,80 @@ final class BotEngine: ObservableObject {
         }
     }
 
+    /// Whether the current outfit leaves the top of the dome free for the antenna.
+    private var antennaVisible: Bool {
+        if isMini || morph > 0.95 { return false }
+        switch outfit {
+        case .none, .sunglasses, .roundGlasses, .scarf: return true
+        default: return outfitPresence < 0.05
+        }
+    }
+
+    /// A thin stem with a status light on top; the light takes the state's colour.
+    private func drawAntenna(ctx: inout GraphicsContext, R: CGFloat, ry: CGFloat) {
+        guard antennaVisible else { return }
+        let fade = Double(1 - morph)
+        let now = CGFloat(CACurrentMediaTime())
+        let sway = sin(now * 1.3) * 0.05 + yaw * 0.25 - tilt * 0.4
+        let base = CGPoint(x: 0, y: -ry * 0.92)
+        let len = R * 0.42
+        let tip = CGPoint(x: base.x + sin(sway) * len, y: base.y - cos(sway) * len)
+
+        var stem = Path()
+        stem.move(to: base)
+        stem.addQuadCurve(to: tip, control: CGPoint(x: base.x + sin(sway) * len * 0.3, y: base.y - len * 0.6))
+        ctx.stroke(stem, with: .color(Color(cgColor: JunoConst.antenna).opacity(fade)),
+                   style: StrokeStyle(lineWidth: max(1, R * 0.07), lineCap: .round))
+
+        let cyan = cgColorToTuple(JunoConst.ink)
+        let light = colorFromTuple(mixColor(cyan, col, min(1, tint * 1.2)))
+        let r = R * 0.105
+        ctx.fill(Path(ellipseIn: CGRect(x: tip.x - r * 2.2, y: tip.y - r * 2.2, width: r * 4.4, height: r * 4.4)),
+                 with: .radialGradient(Gradient(colors: [light.opacity(0.45 * fade), light.opacity(0)]),
+                                       center: tip, startRadius: 0, endRadius: r * 2.2))
+        ctx.fill(Path(ellipseIn: CGRect(x: tip.x - r, y: tip.y - r, width: r * 2, height: r * 2)),
+                 with: .color(light.opacity(fade)))
+    }
+
+    /// The dark glass band the eyes sit on. It turns with Juno and fades into the mailbox.
+    private func drawVisor(ctx: inout GraphicsContext, path: Path, R: CGFloat, rx: CGFloat, ry: CGFloat) {
+        guard !isMini, morph < 0.98 else { return }
+        let frames = mEyeFrames(JunoH(R: R, yaw: yaw, pitch: pitch))
+        guard !frames.isEmpty else { return }
+        let ey = frames.map(\.y).reduce(0, +) / CGFloat(frames.count)
+        // Centred on the eyes, so they never slide off the glass as Juno turns
+        let cx = frames.map(\.x).reduce(0, +) / CGFloat(frames.count)
+        let face = max(0.35, cos(yaw))
+        let w = R * 1.56 * (0.6 + 0.4 * face)
+        let h = R * 0.56 * (0.9 + 0.1 * cos(pitch))
+        let rect = CGRect(x: cx - w / 2, y: ey - h / 2, width: w, height: h)
+        let visor = Path(roundedRect: rect, cornerRadius: h / 2)
+        var v = ctx
+        v.clip(to: path)
+        v.opacity = Double(1 - morph)
+        v.fill(visor, with: .linearGradient(
+            Gradient(colors: [Color(cgColor: JunoConst.visorTop), Color(cgColor: JunoConst.visorBottom)]),
+            startPoint: CGPoint(x: 0, y: rect.minY), endPoint: CGPoint(x: 0, y: rect.maxY)))
+        // Glass reflection along the top edge
+        var shine = Path()
+        shine.move(to: CGPoint(x: rect.minX + h * 0.55, y: rect.minY + h * 0.2))
+        shine.addLine(to: CGPoint(x: rect.minX + w * 0.42, y: rect.minY + h * 0.2))
+        v.stroke(shine, with: .color(Color.white.opacity(0.16)),
+                 style: StrokeStyle(lineWidth: max(0.8, h * 0.09), lineCap: .round))
+        v.stroke(visor, with: .color(Color.white.opacity(0.10)), lineWidth: max(0.5, R * 0.015))
+    }
+
     private func drawBlush(ctx: inout GraphicsContext, path: Path, rx: CGFloat, ry: CGFloat, R: CGFloat, blush: CGFloat) {
         ctx.clip(to: path)
         let yOffset = sin(yaw) * rx * 0.8
         for sd in [-1.0, 1.0] {
             let bx = CGFloat(sd) * rx * 0.55 + yOffset
             let by = ry * 0.2
-            var ellipse = Path()
-            ellipse.addEllipse(in: CGRect(x: bx - R*0.17, y: by - R*0.1, width: R*0.34, height: R*0.2))
-            ctx.fill(ellipse, with: .color(Color(red: 1, green: 0.471, blue: 0.588, opacity: Double(0.5 * blush))))
+            // LED cheek bars rather than painted blush
+            var bar = Path()
+            bar.addRoundedRect(in: CGRect(x: bx - R*0.13, y: by - R*0.035, width: R*0.26, height: R*0.07),
+                               cornerSize: CGSize(width: R*0.035, height: R*0.035))
+            ctx.fill(bar, with: .color(Color(red: 1, green: 0.42, blue: 0.62, opacity: Double(0.75 * blush))))
         }
     }
 
@@ -1549,6 +1622,13 @@ final class BotEngine: ObservableObject {
             var eyeCtx = ctx
             eyeCtx.translateBy(x: f.x + stressTremble.x * R, y: ey + stressTremble.y * R)
             eyeCtx.scaleBy(x: fx, y: fy)
+            if !isMini && R > 10 {
+                // LED glow: a soft, blurred copy under the sharp eye
+                var glowCtx = eyeCtx
+                glowCtx.addFilter(.blur(radius: R * 0.07))
+                glowCtx.opacity = 0.8
+                drawEyeShape(ctx: &glowCtx, shape: shape, w: ew, h: eh, open: open, sd: f.sd, R: R)
+            }
             drawEyeShape(ctx: &eyeCtx, shape: shape, w: ew, h: eh, open: open, sd: f.sd, R: R)
         }
     }

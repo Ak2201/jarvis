@@ -32,7 +32,7 @@ Approve permissions, watch your agents work, drop a file, chat with Claude — a
 Some studios showed off gorgeous notch companions… and never let anyone use them.
 **Jarvis is the open version.** Every line of code is open source under the MIT License: read it, fork it, learn from it. The Jarvis name, Juno, the icon and the sounds belong to the Jarvis team (see [License](#license)).
 
-Meet **Juno**: a soft little squircle with big eyes that pops out of your notch, waves hello, follows your cursor with its eyes, gets annoyed when you poke it (and dizzy if you insist), and tells you the moment Claude Code needs you.
+Meet **Juno**: a little visor bot with glowing eyes and an antenna that lights up in the colour of what your agents are doing. It pops out of your notch, waves hello, follows your cursor with its eyes, gets annoyed when you poke it (and dizzy if you insist), and tells you the moment Claude Code needs you.
 
 ## Jarvis on the Mac: dictation, notes, one window
 
@@ -478,7 +478,7 @@ Agents running on a server (VS Code Remote - SSH, an SSH environment in the Clau
 **macOS**
 
 - **Island**: a borderless `NSPanel` hugging the notch, driven by a small state machine (`hidden → petit → home`).
-- **Character**: drawn in SwiftUI `Canvas` + `TimelineView` at 60 fps — squircle body, eyes projected on a sphere, spring animations. No Rive, no Lottie, no images.
+- **Character**: drawn in SwiftUI `Canvas` + `TimelineView` at 60 fps — domed visor-bot body, LED eyes projected on a sphere, spring animations. No Rive, no Lottie, no images.
 - **Claude Code**: a tiny `nb-hook` script receives hook events and forwards them over a Unix socket to the app. For approvals it waits for your click, then answers the hook.
 - **Integrations**: lightweight pollers, paused when nothing is watching.
 - **Declared pills**: `PillCatalog.swift` is the single source of truth — every pill (coding tools, agents, AI providers, services) is declared there with its ID, color and category.

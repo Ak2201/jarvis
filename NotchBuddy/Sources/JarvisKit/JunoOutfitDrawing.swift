@@ -3,7 +3,41 @@ import CoreGraphics
 
 // MARK: - Constants (mirror JS)
 
-private let kEXP: CGFloat = 2.7
+// Juno's visor-bot silhouette: a dome on top (exponent topExp) and a squarer
+// base below (bottomExp). The engine, the outfits and every other Juno drawer
+// use these two numbers, so hats and scarves keep hugging the body.
+enum JunoShape {
+    static let topExp: CGFloat = 2.2
+    static let bottomExp: CGFloat = 4.5
+
+    /// Point on the outline in direction (ca, sa), screen coordinates (y down).
+    static func point(ca: CGFloat, sa: CGFloat, rx: CGFloat, ry: CGFloat) -> CGPoint {
+        let e = 2 / (sa < 0 ? topExp : bottomExp)
+        let x = rx * (ca >= 0 ? pow(ca, e) : -pow(-ca, e))
+        let y = ry * (sa >= 0 ? pow(sa, e) : -pow(-sa, e))
+        return CGPoint(x: x, y: y)
+    }
+
+    /// Radius of the horizontal ring at head-local height y (y up, -1...1).
+    static func ringR(_ y: CGFloat) -> CGFloat {
+        let a = min(1, abs(y))
+        let e = y > 0 ? topExp : bottomExp
+        return pow(1 - pow(a, e), 1 / e)
+    }
+
+    /// The closed outline, n segments.
+    static func path(rx: CGFloat, ry: CGFloat, n: Int = 96) -> Path {
+        var p = Path()
+        for i in 0...n {
+            let a = CGFloat(i) / CGFloat(n) * .pi * 2
+            let pt = point(ca: cos(a), sa: sin(a), rx: rx, ry: ry)
+            if i == 0 { p.move(to: pt) } else { p.addLine(to: pt) }
+        }
+        p.closeSubpath()
+        return p
+    }
+}
+
 private let kVIEW_TILT: CGFloat = -0.30
 private let kACC_PITCH: CGFloat = 0.4
 private let kEYE_W: CGFloat = 0.25
@@ -83,8 +117,7 @@ private struct P3 {
 
 // ringR(y) → radius of horizontal ring at head-local y
 private func mRingR(_ y: CGFloat) -> CGFloat {
-    let a = min(1, abs(y))
-    return pow(1 - pow(a, kEXP), 1 / kEXP)
+    JunoShape.ringR(y)
 }
 
 // rot(p, yaw, pitch) — rotate head-local (x right, y up, z viewer) by yaw then pitch
@@ -183,21 +216,9 @@ private func mInvert(_ p: Path, H: JunoH) -> Path {
     return q
 }
 
-// junoOutfitPath — clean superellipse (n=96), same exponent as JS junoPath
+// junoOutfitPath — Juno's outline (n=96), same shape as the engine's body
 func junoOutfitPath(_ rx: CGFloat, _ ry: CGFloat) -> Path {
-    let n = 96
-    let e: CGFloat = 2.0 / kEXP
-    var p = Path()
-    for i in 0...n {
-        let a = CGFloat(i) / CGFloat(n) * .pi * 2
-        let ca = cos(a), sa = sin(a)
-        let x = rx * (ca >= 0 ? pow(ca, e) : -pow(-ca, e))
-        let y = ry * (sa >= 0 ? pow(sa, e) : -pow(-sa, e))
-        if i == 0 { p.move(to: CGPoint(x: x, y: y)) }
-        else       { p.addLine(to: CGPoint(x: x, y: y)) }
-    }
-    p.closeSubpath()
-    return p
+    JunoShape.path(rx: rx, ry: ry)
 }
 
 // ringPoints — all 120+1 projected points on ring (full circle, for frontRun)
