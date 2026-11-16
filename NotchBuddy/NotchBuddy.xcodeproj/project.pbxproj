@@ -235,6 +235,7 @@
 		74BCCB834995C7E1D4C5091A /* WhatsAppModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADD0D8C37F00BF1877153D8 /* WhatsAppModels.swift */; };
 		75BE63D342A2AE68006F351C /* MacUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A343F2C25DBD9A401ECAD /* MacUpdate.swift */; };
 		77E958DD799B59270163500E /* MailHubPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5E43B1ACC9C77D4A75A3A2 /* MailHubPages.swift */; };
+		77F94C589D8EEC01CC6D19E9 /* IDEBuildStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1882F2AE6172269A5252825 /* IDEBuildStatus.swift */; };
 		78E943E397ABDF618DEA756F /* finish.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37147F42613183DBA8896835 /* finish.wav */; };
 		7A449E237CAAB62758508C7C /* RecapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB882D49084DEA6A10DB4D /* RecapStore.swift */; };
 		7AEED9FBB924F0DD1D07E1A5 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B2AA83D80260660475FAB052 /* Localizable.xcstrings */; };
@@ -363,6 +364,7 @@
 		BB9A6C55CC358C61A6077685 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = C066E2B991AA4F56B2724263 /* sounds */; };
 		BBA9CDC7EB76F797590E514F /* DiffEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8B05E9CA4CDA27B3FC38C4 /* DiffEngine.swift */; };
 		BBCA973A1AE1385BBE79A834 /* VoiceWakeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD7A2C29B15EFFAF67FF2DE /* VoiceWakeFilter.swift */; };
+		BC98CCA23A3A8B4A9457A04C /* IDEBuildStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1882F2AE6172269A5252825 /* IDEBuildStatus.swift */; };
 		BD2BBE969716AB4B60038E73 /* VoiceWakeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD7A2C29B15EFFAF67FF2DE /* VoiceWakeFilter.swift */; };
 		BD99577E5B18F08B45BBF73B /* IslandScreenGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF347B608553500A3F31CFF2 /* IslandScreenGeometry.swift */; };
 		BDC80E6215D70A8F01DCD59C /* FlowAudioBands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596FD03875A10BD2CCBE332 /* FlowAudioBands.swift */; };
@@ -780,6 +782,7 @@
 		F0E2C3ACD815230A0ECAB014 /* EnergyVAD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyVAD.swift; sourceTree = "<group>"; };
 		F1064AD8471C51AFF4F12258 /* SharedSessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSessions.swift; sourceTree = "<group>"; };
 		F178F250C2B80175AB867A09 /* TurnSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnSnapshot.swift; sourceTree = "<group>"; };
+		F1882F2AE6172269A5252825 /* IDEBuildStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDEBuildStatus.swift; sourceTree = "<group>"; };
 		F1BD8F3CAA60CF37640759E1 /* NotchBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchBuddyApp.swift; sourceTree = "<group>"; };
 		F205F7AFCEAC73DFF69F0A25 /* MailPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailPlan.swift; sourceTree = "<group>"; };
 		F289B4DB7C57BC593C2E7B7F /* VoiceDataSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceDataSources.swift; sourceTree = "<group>"; };
@@ -913,6 +916,7 @@
 				C581F7B1A9F14B281B60063E /* GreetingCanvasView.swift */,
 				79D8DD79C3DD9BBC584B3CB2 /* HookServer.swift */,
 				1218B86E249691AF44F819AC /* HotKeyCenter.swift */,
+				F1882F2AE6172269A5252825 /* IDEBuildStatus.swift */,
 				4A09E73F1E58019EF6EA2A62 /* IslandDisplayChoice.swift */,
 				41B5FC38A89178D5CEF108B0 /* IslandPlacement.swift */,
 				15A1A8206F73376F4CAF2057 /* IslandRootView.swift */,
@@ -1502,6 +1506,7 @@
 				8C32A0C3EAF536D3836F61D5 /* GreetingCanvasView.swift in Sources */,
 				2C798C3837A63B9BB561A1A0 /* HookServer.swift in Sources */,
 				B733A76DD197F6D6D949284C /* HotKeyCenter.swift in Sources */,
+				77F94C589D8EEC01CC6D19E9 /* IDEBuildStatus.swift in Sources */,
 				658C579523CF5F8D67B31369 /* InstructionRunner.swift in Sources */,
 				B09E884B33A35FA34543C64B /* IntentParser.swift in Sources */,
 				9E34044A001B01C3A514D20A /* IslandDisplayChoice.swift in Sources */,
@@ -1707,6 +1712,7 @@
 				E6E63DB05D190B389C240956 /* GreetingCanvasView.swift in Sources */,
 				ACAD6E71885D8BE427134DDF /* HookServer.swift in Sources */,
 				F829C1D0DCDE4E64E132FA8C /* HotKeyCenter.swift in Sources */,
+				BC98CCA23A3A8B4A9457A04C /* IDEBuildStatus.swift in Sources */,
 				206EB9BBC33FAF6F6C20A2BE /* InstructionRunner.swift in Sources */,
 				DB072861E2D29278D06E2544 /* IntentParser.swift in Sources */,
 				16C8EC9D5E7DF13FEF872D75 /* IslandDisplayChoice.swift in Sources */,

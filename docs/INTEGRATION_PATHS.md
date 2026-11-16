@@ -18,13 +18,13 @@ Status legend: ✅ built · 🟡 partly built · ⬜ to do
 | 3 | macOS notifications feed (all apps) | ⬜ | Notification Center database | Full Disk Access |
 | 4 | WhatsApp | 🟡 | WhatsApp pill (local gateway) / Dock badge / feed | — / Accessibility / FDA |
 | 5 | Gmail | 🟡 | Apple Mail pill / Gmail API / feed | Automation / OAuth / FDA |
-| 6 | Xcode | ⬜ | DerivedData build logs | — |
-| 7 | Android Studio | ⬜ | `idea.log` | — |
+| 6 | Xcode | ✅ | DerivedData build logs | — |
+| 7 | Android Studio | ✅ | `idea.log` | — |
 | 8 | DaVinci Resolve | ⬜ | Resolve log / scripting API | — |
 | 9 | Chrome and Arc | 🟡 | Dock badge ✅, web notifications through #3 | Accessibility / FDA |
 
 **Suggested order:** 3 (it unlocks WhatsApp, Gmail, Chrome, Arc and most other apps at once) →
-6 → 7 → 5 (Gmail API) → 8.
+5 (Gmail API) → 8.
 
 ---
 
@@ -178,7 +178,18 @@ account.)
    - Model it like the other pollers (`VercelPoller.swift`: timer, Keychain token, publish to
      `AppState`, `.hookReveal` on new items).
 
-## 6. Xcode ⬜
+## 6. Xcode ✅
+
+Built: `IDEBuildStatus.swift` (`XcodeBuildLog`, tested in `scripts/test-ide-build-status.sh`)
+and `AppStatusHub.readXcode()`. It reads every DerivedData folder's `Logs/Build` and
+`Logs/Test` manifest (honouring Xcode's custom DerivedData location), re-parsing a manifest only
+when it changes, and shows the newest result: "Build failed · 3 errors", "Build succeeded · 2
+warnings", "2 tests failed", with the scheme under it. A new result pops the island up once
+(sound, and Juno jumps on success), unless Xcode is in front. Results older than 30 min become a
+quiet "Last build" line.
+
+Not done: "Building now" — Xcode writes the manifest only at the end. Next step for it is
+Xcode's toolbar status through Accessibility. Original notes:
 
 - Every build writes `~/Library/Developer/Xcode/DerivedData/<Project>-<hash>/Logs/Build/LogStoreManifest.plist`.
   Checked on this Mac: each entry in `logs` has `title` ("Building project NotchBuddy with
@@ -194,7 +205,18 @@ account.)
 - Also worth it: Simulator running (`com.apple.iphonesimulator`), archive/upload status (same
   manifest, `domainType` other than BuildLog).
 
-## 7. Android Studio ⬜
+## 7. Android Studio ✅
+
+Built: `IDEBuildStatus.swift` (`AndroidStudioLog`) and `AppStatusHub.readAndroidStudio()`. It
+reads the newest `AndroidStudio*/idea.log`, the last 2 MB at first and then only the new lines,
+and follows builds ("About to execute Gradle tasks: […]" → "Gradle build finished / failed in …"
+/ "cancelled with N error(s) in …") and syncs ("Started (…) sync with Gradle for project '…'" →
+"Gradle sync finished in …" / "Gradle sync failed in …. <reason>"). Shows "Building
+assembleDebug +2…", "Syncing My zoho…", "Build succeeded in 1 m 4 s", "Sync failed" with the
+reason. Pops up like Xcode. Android Studio doesn't log an error count for failed builds.
+
+Not done: emulator and device state, install/launch results (`AbstractDeployTask` lines).
+Original notes:
 
 - Log: `~/Library/Logs/Google/AndroidStudio<version>/idea.log` — use the newest version folder
   (on this Mac: `AndroidStudio2026.1.3`). Tail it from the last offset (file source on the file,
