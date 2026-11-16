@@ -9,6 +9,7 @@ import { Sound } from "../core/sound";
 import type { BotEmoteName, BotStateName } from "../core/layout";
 import { PUMPKIN_BODY, drawOutfitBehind, drawOutfitFront, makeHead } from "./outfits";
 import type { Outfit } from "./wardrobe";
+import { JUNO_ANTENNA, JUNO_VISOR_BOTTOM, JUNO_VISOR_TOP, shapePoint } from "./shape";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -67,9 +68,10 @@ const EYE_W = 0.25;
 const EYE_H = 0.27;
 const EYE_SP = 0.37;
 const EYE_P = -0.12;
-const BASE_TOP: RGB = [0.929, 0.929, 0.937]; // #EDEDEF
-const BASE_BOTTOM: RGB = [0.769, 0.773, 0.792]; // #C4C5CA
-const INK = "rgb(26,20,18)"; // #1A1412
+const BASE_TOP: RGB = [0.949, 0.957, 0.969]; // #F2F4F7
+const BASE_BOTTOM: RGB = [0.737, 0.765, 0.808]; // #BCC3CE
+const INK_RGB: RGB = [0.31, 0.827, 1]; // #4FD3FF, LED eyes
+const INK = "rgb(79,211,255)"; // #4FD3FF
 const MINI_INK = "rgb(16,19,26)"; // #10131A
 
 const C = {
@@ -823,6 +825,8 @@ export class BotEngine {
     if (head) drawOutfitBehind(x, this.outfit, head, outfitState);
 
     const body = this.bodyPath(rx, ry, R);
+    // Antenna, behind the body so its stem grows out of the dome.
+    this.drawAntenna(x, R, ry);
     this.drawBody(x, body, R, rx, ry);
 
     const blushVal = Math.max(this.blush, this.tint * 0.5) * (1 - this.morph);
@@ -830,15 +834,19 @@ export class BotEngine {
       x.save();
       x.clip(body);
       const yOffset = Math.sin(this.yaw) * rx * 0.8;
-      x.fillStyle = `rgba(255,120,150,${0.5 * blushVal})`;
+      // LED cheek bars rather than painted blush
+      x.fillStyle = `rgba(255,107,158,${0.75 * blushVal})`;
       for (const sd of [-1, 1]) {
-        x.beginPath();
-        x.ellipse(sd * rx * 0.55 + yOffset, ry * 0.2, R * 0.17, R * 0.1, 0, 0, Math.PI * 2);
+        const bx = sd * rx * 0.55 + yOffset;
+        const by = ry * 0.48; // just below the visor
+        roundRectPath(x, bx - R * 0.13, by - R * 0.035, R * 0.26, R * 0.07, R * 0.035);
         x.fill();
       }
       x.restore();
     }
 
+    // Glass visor the eyes glow on
+    this.drawVisor(x, body, R, rx, ry);
     this.drawEyes(x, body, R, rx, ry);
     if (this.morph > 0.05) this.drawMouth(x, body, R);
 
@@ -855,7 +863,6 @@ export class BotEngine {
 
   private bodyPath(rx: number, ry: number, R: number): Path2D {
     const n = 72;
-    const expN = 2.0 / 2.7;
     const tw = R * 1.0;
     const th = R * 0.94;
     const tr = R * 0.42;
@@ -865,8 +872,9 @@ export class BotEngine {
       const a = (i / n) * Math.PI * 2;
       const ca = Math.cos(a);
       const sa = Math.sin(a);
-      const px0 = rx * (ca >= 0 ? Math.pow(ca, expN) : -Math.pow(-ca, expN));
-      const py0 = ry * (sa >= 0 ? Math.pow(sa, expN) : -Math.pow(-sa, expN));
+      const p0 = shapePoint(ca, sa, rx, ry);
+      const px0 = p0.x;
+      const py0 = p0.y;
       let px = px0;
       let py = py0;
       if (m >= 0.005) {
@@ -937,6 +945,97 @@ export class BotEngine {
     x.restore();
   }
 
+  /** Whether the current outfit leaves the top of the dome free for the antenna. */
+  private get antennaVisible(): boolean {
+    if (this.isMini || this.morph > 0.95) return false;
+    switch (this.outfit) {
+      case "none": case "sunglasses": case "roundGlasses": case "scarf": return true;
+      default: return this.outfitPresence < 0.05;
+    }
+  }
+
+  /** A thin stem with a status light on top; the light takes the state's colour. */
+  private drawAntenna(x: CanvasRenderingContext2D, R: number, ry: number) {
+    if (!this.antennaVisible) return;
+    const fade = 1 - this.morph;
+    const sway = Math.sin(now() * 1.3) * 0.05 + this.yaw * 0.25 - this.tilt * 0.4;
+    const bx = 0;
+    const by = -ry * 0.92;
+    const len = R * 0.42;
+    const tx = bx + Math.sin(sway) * len;
+    const ty = by - Math.cos(sway) * len;
+
+    x.save();
+    x.globalAlpha *= fade;
+    x.strokeStyle = JUNO_ANTENNA;
+    x.lineWidth = Math.max(1, R * 0.07);
+    x.lineCap = "round";
+    x.beginPath();
+    x.moveTo(bx, by);
+    x.quadraticCurveTo(bx + Math.sin(sway) * len * 0.3, by - len * 0.6, tx, ty);
+    x.stroke();
+
+    const light = mix3(INK_RGB, this.col, Math.min(1, this.tint * 1.2));
+    const r = R * 0.105;
+    const glow = x.createRadialGradient(tx, ty, 0, tx, ty, r * 2.2);
+    glow.addColorStop(0, rgba(light, 0.45));
+    glow.addColorStop(1, rgba(light, 0));
+    x.fillStyle = glow;
+    x.beginPath();
+    x.arc(tx, ty, r * 2.2, 0, Math.PI * 2);
+    x.fill();
+    x.fillStyle = rgba(light, 1);
+    x.beginPath();
+    x.arc(tx, ty, r, 0, Math.PI * 2);
+    x.fill();
+    x.restore();
+  }
+
+  /** The dark glass band the eyes sit on. It turns with Juno and fades into the mailbox. */
+  private drawVisor(x: CanvasRenderingContext2D, body: Path2D, R: number, rx: number, ry: number) {
+    if (this.isMini || this.morph >= 0.98) return;
+    // Eye centres as mEyeFrames gives them (no roll, no morph offset), both eyes
+    let sx = 0;
+    let sy = 0;
+    for (const sd of [-1, 1]) {
+      const eyeYaw = sd * EYE_SP + this.yaw;
+      const eyePitch = EYE_P + this.pitch;
+      sx += Math.sin(eyeYaw) * Math.cos(eyePitch) * rx;
+      sy += -Math.sin(eyePitch) * ry;
+    }
+    // Centred on the eyes, so they never slide off the glass as Juno turns
+    const cx = sx / 2;
+    const ey = sy / 2;
+    const face = Math.max(0.35, Math.cos(this.yaw));
+    const w = R * 1.56 * (0.6 + 0.4 * face);
+    const h = R * 0.56 * (0.9 + 0.1 * Math.cos(this.pitch));
+    const left = cx - w / 2;
+    const top = ey - h / 2;
+
+    x.save();
+    x.clip(body);
+    x.globalAlpha *= 1 - this.morph;
+    const g = x.createLinearGradient(0, top, 0, top + h);
+    g.addColorStop(0, JUNO_VISOR_TOP);
+    g.addColorStop(1, JUNO_VISOR_BOTTOM);
+    roundRectPath(x, left, top, w, h, h / 2);
+    x.fillStyle = g;
+    x.fill();
+    // Glass reflection along the top edge
+    x.strokeStyle = "rgba(255,255,255,0.16)";
+    x.lineWidth = Math.max(0.8, h * 0.09);
+    x.lineCap = "round";
+    x.beginPath();
+    x.moveTo(left + h * 0.55, top + h * 0.2);
+    x.lineTo(left + w * 0.42, top + h * 0.2);
+    x.stroke();
+    roundRectPath(x, left, top, w, h, h / 2);
+    x.strokeStyle = "rgba(255,255,255,0.10)";
+    x.lineWidth = Math.max(0.5, R * 0.015);
+    x.stroke();
+    x.restore();
+  }
+
   private drawEyes(x: CanvasRenderingContext2D, body: Path2D, R: number, rx: number, ry: number) {
     let shape: EyeShape = this.eyeOverride ?? this.cfg.eye;
     // Dancing: happy eyes in the calm states.
@@ -953,6 +1052,15 @@ export class BotEngine {
     const ink = this.isMini ? MINI_INK : INK;
     x.fillStyle = ink;
     x.strokeStyle = ink;
+    if (!this.isMini && R > 10) {
+      // LED glow. shadowBlur ignores the transform, so scale it to device pixels;
+      // a Gaussian of radius r is shadowBlur 2r.
+      const m = x.getTransform();
+      x.shadowBlur = R * 0.07 * 2 * Math.hypot(m.a, m.b);
+      x.shadowColor = rgba(INK_RGB, 0.8);
+      x.shadowOffsetX = 0;
+      x.shadowOffsetY = 0;
+    }
 
     for (const sd of [-1, 1]) {
       const eyeYaw = sd * EYE_SP + this.yaw;
@@ -1039,12 +1147,14 @@ export class BotEngine {
       }
       case "heart":
         x.fillStyle = "#FF4D6D";
+        if (x.shadowBlur > 0) x.shadowColor = "rgba(255,77,109,0.8)";
         heartPath(x, w * 1.2);
         x.fill();
         x.fillStyle = ink;
         break;
       case "star":
         x.fillStyle = "#F7B32B";
+        if (x.shadowBlur > 0) x.shadowColor = "rgba(247,179,43,0.8)";
         x.rotate(t * 1.5 * sd);
         starPath(x, w * 1.05, w * 0.46);
         x.fill();

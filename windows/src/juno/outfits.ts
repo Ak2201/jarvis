@@ -5,17 +5,18 @@
 // R = 16, the enter/leave transitions, bunny ears).
 //
 // Coordinates are BotEngine's body space: origin at the body centre, y down,
-// R = W × 0.3, rx = 1.14 R, ry = 0.88 R. The head is a superellipsoid whose
-// horizontal radius at height y (y up, −1…1) is (1 − |y|^2.7)^(1/2.7), so its
-// silhouette matches Juno's body at yaw = pitch = 0. Accessories are seen
+// R = W × 0.3, rx = 1.14 R, ry = 0.88 R. The head is a dome-topped
+// superellipsoid whose horizontal radius at height y (y up, −1…1) is
+// shapeRingR(y) (./shape, JunoShape on the Mac), so its silhouette matches
+// Juno's body at yaw = pitch = 0. Accessories are seen
 // slightly from above and follow the head pitch only partly, so a hat never
 // flips to a top-down view.
 
 import { Ease } from "../core/anim";
 import type { Outfit, OutfitSelection } from "./wardrobe";
 import { SCRIPT_FONTS } from "../core/fonts";
+import { shapePath, shapeRingR } from "./shape";
 
-const EXP = 2.7;
 const VIEW_TILT = -0.3;
 const ACC_PITCH = 0.4;
 const EYE_W = 0.25;
@@ -50,8 +51,7 @@ export function makeHead(R: number, yaw = 0, pitch = 0, physDx = 0, physDy = 0):
 
 /** Radius of the horizontal ring of the head at height y. */
 function ringR(y: number): number {
-  const a = Math.min(1, Math.abs(y));
-  return Math.pow(1 - Math.pow(a, EXP), 1 / EXP);
+  return shapeRingR(y);
 }
 
 /** Head-local point (x right, y up, z toward the viewer) → body space, with depth. */
@@ -142,22 +142,9 @@ function fillAll(ctx: Ctx, H: Head) {
   ctx.fillRect(-H.rx * 4, -H.ry * 4, H.rx * 8, H.ry * 8);
 }
 
-/** Juno's body outline, same superellipse as the engine. */
+/** Juno's body outline, same shape as the engine's body. */
 export function bodyOutline(rx: number, ry: number): Path2D {
-  const p = new Path2D();
-  const n = 96;
-  const e = 2 / EXP;
-  for (let i = 0; i <= n; i++) {
-    const a = (i / n) * Math.PI * 2;
-    const ca = Math.cos(a);
-    const sa = Math.sin(a);
-    const x = rx * Math.sign(ca) * Math.pow(Math.abs(ca), e);
-    const y = ry * Math.sign(sa) * Math.pow(Math.abs(sa), e);
-    if (i === 0) p.moveTo(x, y);
-    else p.lineTo(x, y);
-  }
-  p.closePath();
-  return p;
+  return shapePath(rx, ry, 96);
 }
 
 function lin(ctx: Ctx, x0: number, y0: number, x1: number, y1: number, stops: [number, string][]) {

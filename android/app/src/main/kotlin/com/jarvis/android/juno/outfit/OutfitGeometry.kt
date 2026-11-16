@@ -1,19 +1,16 @@
 package com.jarvis.android.juno.outfit
 
+import com.jarvis.android.juno.JunoShape
 import kotlin.math.PI
-import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.sign
 import kotlin.math.sin
 
 /**
  * The head's 3D helpers of windows/src/juno/outfits.ts. Body space: origin at the body centre, y down,
- * R = width x 0.3, rx = 1.14 R, ry = 0.88 R. The head is a superellipsoid, so its silhouette matches Juno's body.
+ * R = width x 0.3, rx = 1.14 R, ry = 0.88 R. The head is built on [JunoShape] (dome on top, squarer base), so its silhouette
+ * matches Juno's body.
  */
-const val EXP = 2.7
 const val VIEW_TILT = -0.3
 const val ACC_PITCH = 0.4
 const val EYE_W = 0.25
@@ -35,10 +32,7 @@ fun makeHead(R: Double, yaw: Double = 0.0, pitch: Double = 0.0, physDx: Double =
     Head(R, R * 1.14, R * 0.88, yaw, pitch, physDx, physDy)
 
 /** Radius of the horizontal ring of the head at height y. */
-fun ringR(y: Double): Double {
-    val a = min(1.0, abs(y))
-    return (1 - a.pow(EXP)).pow(1 / EXP)
-}
+fun ringR(y: Double): Double = JunoShape.ringR(y)
 
 /** Head-local point (x right, y up, z toward the viewer) to body space, with depth. */
 fun proj(h: Head, x: Double, y: Double, z: Double): P3 {
@@ -119,19 +113,10 @@ fun invert(p: Path2D, h: Head): Path2D {
     return q
 }
 
-/** Juno's body outline, the same superellipse as the engine. */
+/** Juno's body outline, the same shape as the engine's body. */
 fun bodyOutline(rx: Double, ry: Double): Path2D {
     val p = Path2D()
-    val n = 96
-    val e = 2 / EXP
-    for (i in 0..n) {
-        val a = i.toDouble() / n * PI * 2
-        val ca = cos(a)
-        val sa = sin(a)
-        val x = rx * sign(ca) * abs(ca).pow(e)
-        val y = ry * sign(sa) * abs(sa).pow(e)
-        if (i == 0) p.moveTo(x, y) else p.lineTo(x, y)
-    }
+    JunoShape.points(rx, ry, 96).forEachIndexed { i, q -> if (i == 0) p.moveTo(q.x, q.y) else p.lineTo(q.x, q.y) }
     p.closePath()
     return p
 }

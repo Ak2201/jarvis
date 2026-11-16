@@ -1574,7 +1574,7 @@ final class BotEngine: ObservableObject {
         let yOffset = sin(yaw) * rx * 0.8
         for sd in [-1.0, 1.0] {
             let bx = CGFloat(sd) * rx * 0.55 + yOffset
-            let by = ry * 0.2
+            let by = ry * 0.48  // just below the visor
             // LED cheek bars rather than painted blush
             var bar = Path()
             bar.addRoundedRect(in: CGRect(x: bx - R*0.13, y: by - R*0.035, width: R*0.26, height: R*0.07),

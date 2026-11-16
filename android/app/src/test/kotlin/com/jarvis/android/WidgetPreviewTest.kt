@@ -183,10 +183,13 @@ class WidgetPreviewTest {
             assertTrue("$state glow colour", glow.contains(hex(tone)))
             assertTrue("$state glow fades out", glow.contains("""android:type="radial"""") && Regex("""android:color="#00${hex(tone)}"""").containsMatchIn(glow))
             assertTrue(juno.indexOf("preview_glow_$state") in 0 until juno.indexOf("preview_face_$state"))
-            // The body, its light gradient, the pink cheeks and two dark eyes.
-            assertTrue(face.contains("#EDEDEF") && face.contains("#C4C5CA"))
-            assertTrue(face.contains("#59FF7896"))
-            assertTrue(state, Regex("""#1A1412""").findAll(face).count() >= 2)
+            // The visor bot: the body and its light gradient, the LED cheek bars, the dark glass visor, the antenna and two cyan LED eyes.
+            assertTrue(face.contains("#F2F4F7") && face.contains("#BCC3CE"))
+            assertTrue(face.contains("#86FF6B9E"))
+            assertTrue(face.contains("#172338") && face.contains("#0B1220"))
+            assertTrue(face.contains("#C5CBD5"))
+            assertTrue(state, Regex("""strokeColor="#4FD3FF"|fillColor="#4FD3FF"""").findAll(face).count() >= 2)
+            assertFalse(face.contains("#1A1412"))
             for (d in listOf(face, glow)) {
                 assertTrue(d.contains("""android:viewportWidth="120"""") && d.contains("""android:viewportHeight="120""""))
             }

@@ -1,5 +1,6 @@
 package com.jarvis.android.juno
 
+import android.graphics.BlurMaskFilter
 import android.graphics.Typeface
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -22,6 +23,7 @@ import com.jarvis.android.juno.outfit.PUMPKIN_BODY
 import com.jarvis.android.juno.outfit.Css
 import com.jarvis.android.juno.outfit.drawOutfitBehind
 import com.jarvis.android.juno.outfit.drawOutfitFront
+import com.jarvis.android.juno.outfit.eyeFrames
 import com.jarvis.android.juno.outfit.makeHead
 import kotlin.math.PI
 import kotlin.math.abs
@@ -33,11 +35,12 @@ import kotlin.math.sin
 
 /**
  * Compose Canvas port of JunoEngine.draw() in windows/src/juno/engine.ts.
- * Draws hands, body, blush, eyes, mouth, badge, particles and the outfits (juno/outfit, checked against the PC's drawing).
+ * Draws hands, antenna, body, LED cheeks, visor, eyes, mouth, badge, particles and the outfits (juno/outfit, checked
+ * against the PC's drawing). The "visor bot" look follows BotEngine.swift on the Mac.
  */
 object JunoPainter {
-    private val INK = Color(26, 20, 18)
-    private val MINI_INK = Color(16, 19, 26)
+    private val INK = JunoConst.INK.color()
+    private val MINI_INK = JunoConst.MINI_INK.color()
 
     private fun Rgb.color(a: Double = 1.0) =
         Color(r.toFloat().coerceIn(0f, 1f), g.toFloat().coerceIn(0f, 1f), b.toFloat().coerceIn(0f, 1f), a.toFloat().coerceIn(0f, 1f))
@@ -89,6 +92,8 @@ object JunoPainter {
             if (head != null && outfitCtx != null) drawOutfitBehind(outfitCtx, e.outfit, head, outfitState)
 
             val body = bodyPath(e, rx, ry, r)
+            // Antenna, behind the body so its stem grows out of the dome.
+            drawAntenna(c, e, nowSec, r, ry)
             drawBody(c, e, body, r, rx, ry)
 
             val blushVal = max(e.blush, e.tint * 0.5) * (1 - e.morph)
@@ -96,18 +101,18 @@ object JunoPainter {
                 c.save()
                 c.clipPath(body)
                 val yOffset = sin(e.yaw) * rx * 0.8
-                val p = fillPaint(Color(255, 120, 150, (255 * 0.5 * blushVal).toInt().coerceIn(0, 255)))
+                // LED cheek bars rather than painted blush, just below the visor
+                val p = fillPaint(Color(255, 107, 158, (255 * 0.75 * blushVal).toInt().coerceIn(0, 255)))
                 for (sd in intArrayOf(-1, 1)) {
-                    c.drawOval(
-                        Rect(
-                            (sd * rx * 0.55 + yOffset - r * 0.17).toFloat(), (ry * 0.2 - r * 0.1).toFloat(),
-                            (sd * rx * 0.55 + yOffset + r * 0.17).toFloat(), (ry * 0.2 + r * 0.1).toFloat(),
-                        ), p,
-                    )
+                    val bx = sd * rx * 0.55 + yOffset
+                    val by = ry * 0.48 // just below the visor
+                    roundRect(c, bx - r * 0.13, by - r * 0.035, r * 0.26, r * 0.07, r * 0.035, p)
                 }
                 c.restore()
             }
 
+            // Glass visor the eyes glow on
+            drawVisor(c, e, body, r)
             drawEyes(c, e, nowSec, body, r, rx, ry)
             if (e.morph > 0.05) drawMouth(c, e, body, r)
 
@@ -188,6 +193,80 @@ object JunoPainter {
         c.drawPath(body, hl)
     }
 
+    /** Whether the current outfit leaves the top of the dome free for the antenna. */
+    private fun antennaVisible(e: JunoEngine): Boolean {
+        if (e.isMini || e.morph > 0.95) return false
+        return when (e.outfit) {
+            Outfit.NONE, Outfit.SUNGLASSES, Outfit.ROUND_GLASSES, Outfit.SCARF -> true
+            else -> e.outfitPresence < 0.05
+        }
+    }
+
+    /** A thin stem with a status light on top; the light takes the state's colour. */
+    private fun drawAntenna(c: Canvas, e: JunoEngine, nowSec: Double, r: Double, ry: Double) {
+        if (!antennaVisible(e)) return
+        val fade = (1 - e.morph).coerceIn(0.0, 1.0)
+        // Reduce motion: no idle sway, it still leans with the head.
+        val idle = if (e.reduceMotion) 0.0 else sin(nowSec * 1.3) * 0.05
+        val sway = idle + e.yaw * 0.25 - e.tilt * 0.4
+        val baseX = 0.0
+        val baseY = -ry * 0.92
+        val len = r * 0.42
+        val tipX = baseX + sin(sway) * len
+        val tipY = baseY - cos(sway) * len
+
+        val stem = Path().apply {
+            moveTo(baseX.toFloat(), baseY.toFloat())
+            quadraticBezierTo((baseX + sin(sway) * len * 0.3).toFloat(), (baseY - len * 0.6).toFloat(), tipX.toFloat(), tipY.toFloat())
+        }
+        c.drawPath(stem, strokePaint(JunoConst.ANTENNA.color(fade), max(1.0, r * 0.07).toFloat()))
+
+        val light = JunoConst.INK.mix(e.col, min(1.0, e.tint * 1.2))
+        val lr = r * 0.105
+        val tip = Offset(tipX.toFloat(), tipY.toFloat())
+        val glow = Paint().apply {
+            isAntiAlias = true
+            shader = RadialGradientShader(tip, (lr * 2.2).toFloat(), listOf(light.color(0.45 * fade), light.color(0.0)))
+        }
+        c.drawCircle(tip, (lr * 2.2).toFloat(), glow)
+        c.drawCircle(tip, lr.toFloat(), fillPaint(light.color(fade)))
+    }
+
+    /** The dark glass band the eyes sit on. It turns with Juno and fades into the mailbox. */
+    private fun drawVisor(c: Canvas, e: JunoEngine, body: Path, r: Double) {
+        if (e.isMini || e.morph >= 0.98) return
+        val frames = eyeFrames(makeHead(r, e.yaw, e.pitch))
+        if (frames.isEmpty()) return
+        // Centred on the eyes, so they never slide off the glass as Juno turns
+        val cx = frames.sumOf { it.x } / frames.size
+        val ey = frames.sumOf { it.y } / frames.size
+        val face = max(0.35, cos(e.yaw))
+        val w = r * 1.56 * (0.6 + 0.4 * face)
+        val h = r * 0.56 * (0.9 + 0.1 * cos(e.pitch))
+        val left = cx - w / 2
+        val top = ey - h / 2
+        val a = (1 - e.morph).coerceIn(0.0, 1.0)
+
+        c.save()
+        c.clipPath(body)
+        val glass = Paint().apply {
+            isAntiAlias = true
+            shader = LinearGradientShader(
+                Offset(0f, top.toFloat()), Offset(0f, (top + h).toFloat()),
+                listOf(JunoConst.VISOR_TOP.color(a), JunoConst.VISOR_BOTTOM.color(a)),
+            )
+        }
+        roundRect(c, left, top, w, h, h / 2, glass)
+        // Glass reflection along the top edge
+        c.drawLine(
+            Offset((left + h * 0.55).toFloat(), (top + h * 0.2).toFloat()),
+            Offset((left + w * 0.42).toFloat(), (top + h * 0.2).toFloat()),
+            strokePaint(Color.White.copy(alpha = (0.16 * a).toFloat()), max(0.8, h * 0.09).toFloat()),
+        )
+        roundRect(c, left, top, w, h, h / 2, strokePaint(Color.White.copy(alpha = (0.10 * a).toFloat()), max(0.5, r * 0.015).toFloat()))
+        c.restore()
+    }
+
     private fun drawEyes(c: Canvas, e: JunoEngine, nowSec: Double, body: Path, r: Double, rx: Double, ry: Double) {
         var shape = e.eyeOverride ?: e.cfg.eye
         if (e.morph > 0.5) {
@@ -217,6 +296,10 @@ object JunoPainter {
             c.save()
             c.translate(ex.toFloat(), ey.toFloat())
             c.scale(fx.toFloat(), fy.toFloat())
+            if (!e.isMini && r > 10) {
+                // LED glow: a soft, blurred copy under the sharp eye
+                drawEyeShape(c, e, nowSec, shape, ew, eh, sd, ink, Glow((r * 0.07).toFloat(), 0.8f))
+            }
             drawEyeShape(c, e, nowSec, shape, ew, eh, sd, ink)
             c.restore()
         }
@@ -257,10 +340,22 @@ object JunoPainter {
         close()
     }
 
-    private fun drawEyeShape(c: Canvas, e: JunoEngine, nowSec: Double, shape: EyeShape, w: Double, h: Double, sd: Int, ink: Color) {
+    /** A blurred, see-through copy of an eye: [radius] is the blur radius in pixels, [alpha] multiplies the colour's. */
+    private class Glow(val radius: Float, val alpha: Float)
+
+    private fun Paint.glow(g: Glow?): Paint {
+        if (g == null) return this
+        alpha *= g.alpha
+        if (g.radius > 0f) asFrameworkPaint().maskFilter = BlurMaskFilter(g.radius, BlurMaskFilter.Blur.NORMAL)
+        return this
+    }
+
+    private fun drawEyeShape(c: Canvas, e: JunoEngine, nowSec: Double, shape: EyeShape, w: Double, h: Double, sd: Int, ink: Color, glow: Glow? = null) {
+        fun fillPaint(col: Color) = this.fillPaint(col).glow(glow)
+        fun strokePaint(col: Color, width: Float) = this.strokePaint(col, width).glow(glow)
         val fill = fillPaint(ink)
         when (shape) {
-            EyeShape.WIDE -> drawEyeShape(c, e, nowSec, EyeShape.PILL, w * 1.16, h * 1.12, sd, ink)
+            EyeShape.WIDE -> drawEyeShape(c, e, nowSec, EyeShape.PILL, w * 1.16, h * 1.12, sd, ink, glow)
             EyeShape.PILL -> {
                 val hh = max(h * e.open, w * 0.3)
                 roundRect(c, -w / 2, -hh / 2, w, hh, min(w / 2, hh / 2), fill)

@@ -41,8 +41,13 @@ object JunoConst {
     const val EYE_H = 0.27
     const val EYE_SP = 0.37
     const val EYE_P = -0.12
-    val BASE_TOP = Rgb(0.929, 0.929, 0.937)    // #EDEDEF
-    val BASE_BOTTOM = Rgb(0.769, 0.773, 0.792) // #C4C5CA
+    val BASE_TOP = Rgb(0.949, 0.957, 0.969)    // #F2F4F7
+    val BASE_BOTTOM = Rgb(0.737, 0.765, 0.808) // #BCC3CE
+    val INK = Rgb(0.310, 0.827, 1.0)           // #4FD3FF, LED eyes
+    val VISOR_TOP = Rgb(0.090, 0.137, 0.220)   // #172338
+    val VISOR_BOTTOM = Rgb(0.043, 0.071, 0.125) // #0B1220
+    val ANTENNA = Rgb(0.773, 0.796, 0.835)     // #C5CBD5
+    val MINI_INK = Rgb(0.063, 0.075, 0.102)    // #10131A
 
     val C_IDLE = Rgb(0.902, 0.914, 0.933)
     val C_WORKING = Rgb(0.231, 0.62, 1.0)

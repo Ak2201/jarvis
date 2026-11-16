@@ -6,6 +6,7 @@ import com.jarvis.android.juno.BotState
 import com.jarvis.android.juno.EyeShape
 import com.jarvis.android.juno.JunoEngine
 import com.jarvis.android.juno.JunoGeometry
+import com.jarvis.android.juno.JunoShape
 import com.jarvis.android.juno.ParticleType
 import com.jarvis.android.juno.Prop
 import com.jarvis.android.juno.SoundSink
@@ -39,13 +40,21 @@ class JunoEngineTest {
         assertTrue("back overshoots", Ease.back(0.8) > 1.0)
     }
 
-    @Test fun bodyIsASuperellipseOfExponent2_7() {
+    @Test fun bodyIsADomeOnTopAndSquarerBelow() {
         val rx = 1.14
         val ry = 0.88
         for (p in JunoGeometry.bodyPoints(rx, ry, 1.0, 0.0)) {
-            val v = abs(p.x / rx).pow(2.7) + abs(p.y / ry).pow(2.7)
+            // Superellipse of exponent 2.2 above the centre (y < 0 on screen), 4.5 below.
+            val n = if (p.y < 0) JunoShape.TOP_EXP else JunoShape.BOTTOM_EXP
+            val v = abs(p.x / rx).pow(n) + abs(p.y / ry).pow(n)
             assertEquals(1.0, v, 1e-6)
         }
+        // The outfits' ring radius is the same outline seen from the front: y up, so the top uses the dome exponent.
+        for (y in listOf(-0.9, -0.5, 0.0, 0.5, 0.9)) {
+            val n = if (y > 0) JunoShape.TOP_EXP else JunoShape.BOTTOM_EXP
+            assertEquals(1.0, JunoShape.ringR(y).pow(n) + abs(y).pow(n), 1e-9)
+        }
+        assertTrue("squarer base", JunoShape.ringR(-0.8) > JunoShape.ringR(0.8))
         val first = JunoGeometry.bodyPoints(rx, ry, 1.0, 0.0).first()
         assertEquals(rx, first.x, 1e-9)
         assertEquals(0.0, first.y, 1e-9)

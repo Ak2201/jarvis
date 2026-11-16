@@ -12,6 +12,9 @@ import {
   USC, eIn, eInOut, eOut, lerp, progressAt,
   type UploadEyeShape, type UploadFrame,
 } from "./sequence";
+import {
+  BOTTOM_EXP, JUNO_BASE_BOTTOM, JUNO_BASE_TOP, JUNO_INK, JUNO_VISOR_BOTTOM, JUNO_VISOR_TOP, TOP_EXP,
+} from "../juno/shape";
 
 const FONT = `system-ui, "Segoe UI Variable Text", "Segoe UI", ${SCRIPT_FONTS}, sans-serif`;
 
@@ -30,7 +33,7 @@ function rr(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: n
   ctx.roundRect(x, y, w, h, rad);
 }
 
-/** Superellipse body — port of usBodyPath(m, R). */
+/** Body — port of usBodyPath(m, R): Juno's dome (./shape) at rest, a rounded box as the morph completes. */
 function bodyPath(ctx: CanvasRenderingContext2D, m: number, R: number): { rx: number; ry: number } {
   const mc = Math.max(0, Math.min(m, 1));
   const n = 2.15 + (5.5 - 2.15) * mc;
@@ -41,8 +44,11 @@ function bodyPath(ctx: CanvasRenderingContext2D, m: number, R: number): { rx: nu
     const a = (i / 96) * Math.PI * 2;
     const ca = Math.cos(a);
     const sa = Math.sin(a);
-    const px = rx * Math.sign(ca) * Math.pow(Math.abs(ca), 2 / n);
-    const py = ry * Math.sign(sa) * Math.pow(Math.abs(sa), 2 / n);
+    const nn = sa < 0
+      ? TOP_EXP + (n - 2.15)
+      : BOTTOM_EXP + ((n - 2.15) * (5.5 - BOTTOM_EXP)) / (5.5 - 2.15);
+    const px = rx * Math.sign(ca) * Math.pow(Math.abs(ca), 2 / nn);
+    const py = ry * Math.sign(sa) * Math.pow(Math.abs(sa), 2 / nn);
     if (i === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   }
@@ -375,8 +381,8 @@ export class UploadCanvas {
 
     // Body.
     const bg = ctx.createLinearGradient(rx * 0.7, -ry * 0.9, -rx * 0.8, ry * 0.9);
-    bg.addColorStop(0, "#EDEDEF");
-    bg.addColorStop(1, "#C4C5CA");
+    bg.addColorStop(0, JUNO_BASE_TOP);
+    bg.addColorStop(1, JUNO_BASE_BOTTOM);
     ctx.fillStyle = bg;
     ctx.fill();
 
@@ -436,6 +442,22 @@ export class UploadCanvas {
     const sp = R * 0.3;
     const lx = f.lookX * R * (0.34 - 0.08 * mc);
     const ly = f.lookY * R * (0.16 - 0.09 * mc);
+    // Glass visor, fading out as Juno becomes the box
+    if (mc < 0.98) {
+      const vw = sp * 2 + ew * 2.1;
+      const vh = eh + ew * 0.9;
+      const vx = lx - vw / 2;
+      const vy = ey + ly - vh / 2;
+      ctx.save();
+      ctx.globalAlpha *= 1 - mc;
+      const vg = ctx.createLinearGradient(0, vy, 0, vy + vh);
+      vg.addColorStop(0, JUNO_VISOR_TOP);
+      vg.addColorStop(1, JUNO_VISOR_BOTTOM);
+      ctx.fillStyle = vg;
+      rr(ctx, vx, vy, vw, vh, vh / 2);
+      ctx.fill();
+      ctx.restore();
+    }
     for (const sd of [-1, 1]) {
       ctx.save();
       ctx.translate(sd * sp + lx, ey + ly);
@@ -523,7 +545,7 @@ export class UploadCanvas {
 
 // ── Eye shapes ──────────────────────────────────────────────────────────────
 
-const INK = "#0E0F12";
+const INK = JUNO_INK; // #4FD3FF, LED eyes
 
 function drawEye(ctx: CanvasRenderingContext2D, shape: UploadEyeShape, w: number, h: number) {
   switch (shape) {

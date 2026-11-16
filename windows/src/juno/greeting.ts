@@ -6,6 +6,7 @@
 import { closeCurve } from "../core/anim";
 import { Sound } from "../core/sound";
 import { COMPACT_W, NOTCH_H, NOTCH_W } from "../core/layout";
+import { JUNO_ANTENNA, JUNO_BASE_BOTTOM, JUNO_BASE_TOP, JUNO_INK, JUNO_VISOR_BOTTOM, shapePath } from "./shape";
 
 // ── Timing (GT in the Swift file) ─────────────────────────────────────────────
 
@@ -366,20 +367,7 @@ function rr(x: CanvasRenderingContext2D, X: number, Y: number, W: number, H: num
 }
 
 function junoPath(hw: number, hh: number): Path2D {
-  const n = 3.2;
-  const p = new Path2D();
-  const steps = 96;
-  for (let i = 0; i <= steps; i++) {
-    const a = (i / steps) * 2 * Math.PI;
-    const ca = Math.cos(a);
-    const sa = Math.sin(a);
-    const px = hw * (ca < 0 ? -1 : 1) * Math.pow(Math.abs(ca), 2 / n);
-    const py = hh * (sa < 0 ? -1 : 1) * Math.pow(Math.abs(sa), 2 / n);
-    if (i === 0) p.moveTo(px, py);
-    else p.lineTo(px, py);
-  }
-  p.closePath();
-  return p;
+  return shapePath(hw, hh, 96);
 }
 
 /** White body gradient. A canvas gradient pads past its ends, so the corners are never left unpainted. */
@@ -388,8 +376,8 @@ function whiteFill(
   x0: number, y0: number, x1: number, y1: number,
 ) {
   const g = x.createLinearGradient(x0, y0, x1, y1);
-  g.addColorStop(0, "rgb(251,251,252)");
-  g.addColorStop(1, "rgb(231,233,236)");
+  g.addColorStop(0, JUNO_BASE_TOP);
+  g.addColorStop(1, JUNO_BASE_BOTTOM);
   x.fillStyle = g;
   x.fill(path);
 }
@@ -416,8 +404,8 @@ function drawHandR(x: CanvasRenderingContext2D, hw: number, hh: number, p: Pose)
   x.rotate(h.ang);
   rr(x, -h.L / 2, -h.T / 2, h.L, h.T, h.T / 2);
   const g = x.createLinearGradient(h.L / 2, -h.T / 2, -h.L / 2, h.T / 2);
-  g.addColorStop(0, "rgb(251,251,252)");
-  g.addColorStop(1, "rgb(231,233,236)");
+  g.addColorStop(0, JUNO_BASE_TOP);
+  g.addColorStop(1, JUNO_BASE_BOTTOM);
   x.fillStyle = g;
   x.fill();
   x.strokeStyle = "rgba(0,0,0,0.08)";
@@ -456,6 +444,21 @@ function drawJuno(x: CanvasRenderingContext2D, p: Pose) {
   drawHandL(x, hw, hh, p);
   drawHandR(x, hw, hh, p);
 
+  // Antenna behind the dome, with its status light
+  const gR = hh / 0.88;
+  const stemTop = -hh * 0.92 - gR * 0.42;
+  x.strokeStyle = JUNO_ANTENNA;
+  x.lineWidth = Math.max(1, gR * 0.07);
+  x.lineCap = "round";
+  x.beginPath();
+  x.moveTo(0, -hh * 0.92);
+  x.lineTo(0, stemTop);
+  x.stroke();
+  x.fillStyle = JUNO_INK;
+  x.beginPath();
+  x.arc(0, stemTop, gR * 0.105, 0, Math.PI * 2);
+  x.fill();
+
   const body = junoPath(hw, hh);
   whiteFill(x, body, hw * 0.6, -hh, -hw * 0.6, hh);
 
@@ -470,12 +473,24 @@ function drawJuno(x: CanvasRenderingContext2D, p: Pose) {
   // Eyes
   x.save();
   x.clip(body);
-  x.fillStyle = "#16171A";
-  x.strokeStyle = "#16171A";
   const er = p.hb * 0.06;
   const sp = p.hb * 0.19;
   const lx = p.lookX * hw * 0.42;
   const ly = p.lookY * hh * 0.28 + hh * 0.12 + p.eyeRoll * hh * 1.25;
+  // Glass visor the eyes glow on
+  const vw = sp * 2 + er * 5.2;
+  const vh = er * 4.6;
+  rr(x, lx - vw / 2, ly - vh / 2, vw, vh, vh / 2);
+  x.fillStyle = JUNO_VISOR_BOTTOM;
+  x.fill();
+  // LED eyes with a glow (shadowBlur ignores the transform: scale to device pixels)
+  const m = x.getTransform();
+  x.shadowBlur = er * 1.4 * Math.hypot(m.a, m.b);
+  x.shadowColor = JUNO_INK;
+  x.shadowOffsetX = 0;
+  x.shadowOffsetY = 0;
+  x.fillStyle = JUNO_INK;
+  x.strokeStyle = JUNO_INK;
   for (const sd of [-1, 1]) {
     x.save();
     x.translate(sd * sp + lx, ly);
