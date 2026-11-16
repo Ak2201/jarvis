@@ -50,6 +50,19 @@ final class IslandStateMachine {
     /// True while the island is open because of a hover, until the user clicks inside it.
     private(set) var openedByHover = false
 
+    /// Settings → General → Behavior → Always show the island: compact never hides on its own.
+    var alwaysVisible = false {
+        didSet {
+            guard alwaysVisible != oldValue else { return }
+            if alwaysVisible {
+                petitHideWork?.cancel(); petitHideWork = nil
+                if state == .hidden { transition(to: .petit) }
+            } else if state == .petit {
+                schedulePetitHide()
+            }
+        }
+    }
+
     private var petitHideWork: DispatchWorkItem?
     private var homeCollapseWork: DispatchWorkItem?
     private var greetCollapseWork: DispatchWorkItem?
@@ -211,6 +224,8 @@ final class IslandStateMachine {
 
     private func schedulePetitHide() {
         petitHideWork?.cancel()
+        petitHideWork = nil
+        guard !alwaysVisible else { return }
         let item = DispatchWorkItem { [weak self] in
             guard let self, self.state == .petit, !(self.isHeldOpen?() ?? false) else { return }
             self.transition(to: .hidden)

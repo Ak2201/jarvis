@@ -11,6 +11,11 @@ import SwiftUI
 // in front, while it isn't writing, or when the setting is off; no text of the chat is read,
 // only whether the stop button is there.
 
+/// What the watcher saw of a Claude Desktop reply.
+enum ClaudeDesktopReply {
+    case writing, ready, stopped, seen
+}
+
 @MainActor
 final class ClaudeDesktopChatWatcher {
     static let shared = ClaudeDesktopChatWatcher()
@@ -21,9 +26,15 @@ final class ClaudeDesktopChatWatcher {
         get { UserDefaults.standard.bool(forKey: "claudeDesktopChatWatch") }
         set {
             UserDefaults.standard.set(newValue, forKey: "claudeDesktopChatWatch")
-            if !newValue { shared.stopPolling() }
+            if !newValue && !AppStatusHub.isPillActive { shared.stopPolling() }
         }
     }
+
+    /// The setting, or the Apps pill, which needs to know when a reply is written.
+    static var active: Bool { enabled || AppStatusHub.isPillActive }
+
+    /// Posted with a ClaudeDesktopReply when the watcher sees a reply start, end or get read.
+    static let replyNotification = Notification.Name("jarvis.claudeDesktopReply")
 
     private var observers: [NSObjectProtocol] = []
     private var timer: Timer?
@@ -46,18 +57,23 @@ final class ClaudeDesktopChatWatcher {
             let app = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication
             guard app?.bundleIdentifier == Self.bundleId else { return }
             // You're back in Claude: you see the reply yourself.
-            MainActor.assumeIsolated { ClaudeDesktopChatWatcher.shared.stopPolling() }
+            MainActor.assumeIsolated {
+                ClaudeDesktopChatWatcher.shared.stopPolling()
+                NotificationCenter.default.post(name: ClaudeDesktopChatWatcher.replyNotification,
+                                                object: ClaudeDesktopReply.seen)
+            }
         })
     }
 
     private func claudeLeft(pid: pid_t) {
-        guard Self.enabled, AXIsProcessTrusted(), timer == nil else { return }
+        guard Self.active, AXIsProcessTrusted(), timer == nil else { return }
         let app = AXUIElementCreateApplication(pid)
         // Electron builds its accessibility tree only when asked.
         _ = AXUIElementSetAttributeValue(app, "AXManualAccessibility" as CFString, kCFBooleanTrue)
         guard Self.isWriting(app) else { return }
         polls = 0
         appendAppLog("nb.log", "[ClaudeDesktop] reply in progress, watching")
+        NotificationCenter.default.post(name: Self.replyNotification, object: ClaudeDesktopReply.writing)
         let t = Timer(timeInterval: 1, repeats: true) { _ in
             MainActor.assumeIsolated { ClaudeDesktopChatWatcher.shared.poll(pid: pid) }
         }
@@ -68,7 +84,7 @@ final class ClaudeDesktopChatWatcher {
 
     private func poll(pid: pid_t) {
         polls += 1
-        guard Self.enabled, polls < maxPolls,
+        guard Self.active, polls < maxPolls,
               NSRunningApplication(processIdentifier: pid)?.isTerminated == false else { stopPolling(); return }
         let app = AXUIElementCreateApplication(pid)
         guard !Self.isWriting(app) else { return }
@@ -77,12 +93,18 @@ final class ClaudeDesktopChatWatcher {
     }
 
     func stopPolling() {
+        if timer != nil {
+            NotificationCenter.default.post(name: Self.replyNotification, object: ClaudeDesktopReply.stopped)
+        }
         timer?.invalidate()
         timer = nil
     }
 
     private func replyFinished() {
         appendAppLog("nb.log", "[ClaudeDesktop] reply finished")
+        NotificationCenter.default.post(name: Self.replyNotification, object: ClaudeDesktopReply.ready)
+        // The Apps pill reports it on its own; the rest is for the setting.
+        guard Self.enabled else { return }
         let state = AppState.shared
         NotificationCenter.default.post(name: .triggerEmote, object: BotEmote.happy)
         if state.soundEnabled { SoundEngine.shared.play("finish") }

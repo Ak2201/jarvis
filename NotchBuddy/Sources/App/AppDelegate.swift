@@ -373,6 +373,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         WhatsAppController.shared.start()
         MacUpdater.shared.start()
         ClaudeDesktopChatWatcher.shared.start()
+        AppStatusHub.shared.start()
         #endif
         CryptoController.shared.start()
         JarvisdoroController.shared.start()

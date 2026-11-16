@@ -2068,6 +2068,12 @@ struct IntegrationCardView: View {
             return true  // public market data: no key, nothing to set up
         case "integration_jarvisdoro":
             return true  // a local countdown: nothing to connect
+        case "integration_apps":
+            #if !APPSTORE
+            return true  // reads the Mac itself: nothing to connect
+            #else
+            return false
+            #endif
         case "integration_portfolio":
             return PortfolioSettings.hasAnyAccount
         case "ai_anthropic":  return KeychainStore.shared.get("anthropic-api-key") != nil || AppState.shared.subscriptionReady(.anthropic)
@@ -2328,6 +2334,11 @@ struct IntegrationCardView: View {
         } else if task.id == JarvisdoroController.pillId {
             JarvisdoroCardView()
                 .transition(.opacity)
+        } else if task.id == "integration_apps" {
+            #if !APPSTORE
+            AppStatusCardView()
+                .transition(.opacity)
+            #endif
         } else if task.id == "integration_portfolio" {
             PortfolioCardView()
                 .transition(.opacity)

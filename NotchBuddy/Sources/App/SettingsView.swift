@@ -362,6 +362,10 @@ struct SettingsView: View {
                         .frame(width: 64)
                     Text("s inactive")
                 }
+                Toggle(String(localized: "island.always-visible", defaultValue: "Always show the island"),
+                       isOn: $state.alwaysVisible)
+                    .help(String(localized: "island.always-visible.help",
+                                 defaultValue: "The compact island stays on screen. Off: it hides after a while and comes back when something new arrives."))
                 HStack(spacing: 8) {
                     Text("Hide after")
                     TextField("3", value: absenceMinutes, format: .number)
@@ -369,6 +373,7 @@ struct SettingsView: View {
                         .frame(width: 48)
                     Text("min without movement")
                 }
+                .disabled(state.alwaysVisible)
             }
             .padding(6)
         }
@@ -1547,6 +1552,12 @@ struct SettingsView: View {
                 #if !APPSTORE
                 // WhatsApp through a local gateway: its own fields, saved by its own button.
                 WhatsAppSettingsSection()
+                    .padding(.top, 4)
+                #endif
+
+                #if !APPSTORE
+                // Apps: Claude, Xcode, Android Studio, Chrome, Arc, DaVinci Resolve.
+                AppStatusSettingsSection()
                     .padding(.top, 4)
                 #endif
 

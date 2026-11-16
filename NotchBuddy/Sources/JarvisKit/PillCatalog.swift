@@ -133,6 +133,9 @@ enum PillCatalog {
         // Local countdown: work, then rest, until the user stops. No account, no network.
         .init(id: "integration_jarvisdoro", name: "Jarvisdoro", color: "#0EA5E9",
               category: .service,   subtitle: String(localized: "Integration"),  source: .n8n),
+        // Your main Mac apps at a glance, Claude first (AppStatusHub). Reads the Dock, so GitHub build.
+        .init(id: "integration_apps",    name: "Apps",        color: "#22D3EE",
+              category: .service,   subtitle: String(localized: "Integration"),  source: .n8n, githubOnly: true),
         // GitHub build only, as intended when it was added (exchange API keys: not worth an
         // App Review question for the store build).
         .init(id: "integration_portfolio", name: "Portfolio",   color: "#FFD700",

@@ -339,6 +339,10 @@ final class AppState: ObservableObject {
     }
 
     // Absence interval — persisted
+    /// Keep the compact island on screen instead of hiding it after `absenceInterval`.
+    @Published var alwaysVisible: Bool = false {
+        didSet { UserDefaults.standard.set(alwaysVisible, forKey: "alwaysVisible") }
+    }
     @Published var absenceInterval: TimeInterval = 3 * 60 {
         didSet { UserDefaults.standard.set(absenceInterval, forKey: "absenceInterval") }
     }
@@ -595,6 +599,7 @@ final class AppState: ObservableObject {
             autoCloseInterval = (v == 60) ? 15 : v
         }
         if let v = ud.object(forKey: "absenceInterval")   as? Double { absenceInterval   = v }
+        alwaysVisible = ud.bool(forKey: "alwaysVisible")
         if let v = ud.object(forKey: "greetThreshold")    as? Double { greetThresholdSeconds = v }
         if let v = ud.object(forKey: "hotkeyEnabled") as? Bool  { hotkeyEnabled = v }
         if let v = ud.object(forKey: "hotkeyFlags")   as? Int   { hotkeyFlags = UInt(v) }

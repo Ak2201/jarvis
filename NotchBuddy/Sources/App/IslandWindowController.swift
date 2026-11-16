@@ -19,6 +19,7 @@ final class IslandWindowController: NSWindowController {
     private var placementSubscription: AnyCancellable?
     private var autoCloseSubscription: AnyCancellable?
     private var absenceSubscription: AnyCancellable?
+    private var alwaysVisibleSubscription: AnyCancellable?
     private var openOnHoverSubscription: AnyCancellable?
 
     // Confused recovery timer (set by handleDizzy)
@@ -297,6 +298,9 @@ final class IslandWindowController: NSWindowController {
         }
         absenceSubscription = state.$absenceInterval.sink { [weak self] delay in
             self?.fsm.petitToHiddenDelay = delay
+        }
+        alwaysVisibleSubscription = state.$alwaysVisible.sink { [weak self] on in
+            self?.fsm.alwaysVisible = on
         }
         openOnHoverSubscription = state.$openOnHover.sink { [weak self] on in
             self?.fsm.openOnHover = on
